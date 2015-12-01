@@ -1,3 +1,5 @@
 <div class="widget-area">
-	<?php dynamic_sidebar(); ?>
+	<ul class="sidebar">
+		<?php dynamic_sidebar(); ?>
+	</ul>
 </div>

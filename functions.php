@@ -19,10 +19,22 @@ add_action( 'after_setup_theme', function() {
 // Sidebars
 add_action( 'widgets_init', function() {
 	register_sidebar( array(
-		'name'		=> __( 'Right Sidebar', 'simplecommerce' ),
-		'id'		=> 'sidebar-right',
-		'description' => __( 'Widgets added to this sidebar will be displayed on the right side of page templates supporting a sidebar.' )
+		'name'		=> __( 'Footer Section 1', 'simplecommerce' ),
+		'id'		=> 'footer-col-1',
+		'description' => __( 'Widgets added to this sidebar will be displayed in the first column of the footer.' )
 	) );
+
+	register_sidebar( array(
+		'name'		=> __( 'Footer Section 2', 'simplecommerce' ),
+		'id'		=> 'footer-col-2',
+		'description' => __( 'Widgets added to this sidebar will be displayed in the second column of the footer.' )
+	) );
+
+	register_sidebar( array(
+		'name'		=> __( 'Footer Section 3', 'simplecommerce' ),
+		'id'		=> 'footer-col-3',
+		'description' => __( 'Widgets added to this sidebar will be displayed in the third column of the footer.' )
+	) );	
 });
 
 ?>

@@ -22,20 +22,30 @@
 ?>
 
 	<div class="row">
-		<?php if ( is_active_sidebar( 'sidebar-right' ) ): ?>
-			<div class="nine columns">
-				<?php simplecommerce_index_add_main_content(); ?>
-			</div>
-			<div class="three columns">
-				<?php dynamic_sidebar( 'sidebar-right' ); ?>
-			</div>
-		<?php else: ?>
-			<div class="twelve columns">
-				<?php simplecommerce_index_add_main_content(); ?>
-			</div>
-		<?php endif // is_active_sidebar ?>
+		<div class="twelve columns">
+			<?php simplecommerce_index_add_main_content(); ?>
+		</div>
 	</div>
 
+
+</div><!-- .container -->
+<div class="footer-nav">
+	<div class="container">
+		<div class="row footer-widget-area">
+			<?php foreach ( Array('footer-col-1', 'footer-col-2', 'footer-col-3') as $sidebar_name ): ?>
+				<div class="three columns">
+					<?php if ( is_active_sidebar( $sidebar_name ) ): ?>
+					<ul class="widget-area">
+						<?php dynamic_sidebar( $sidebar_name ); ?>
+					</ul>
+					<?php else: ?>
+					&nbsp;
+					<?php endif; // is_active_sidebar ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</div>
 <?php
 	get_footer();
 ?>

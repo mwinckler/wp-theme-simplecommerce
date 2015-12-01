@@ -16,5 +16,7 @@
 			'before'		=> '<nav class="pagination">',
 			'after'			=> '</nav>'
 		) );
+
+		
 	?>
 </article>
