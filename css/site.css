@@ -547,8 +547,12 @@ th {
   .offset-by-one-half.column,
   .offset-by-one-half.columns     { margin-left: 52%; }
 
+  .nested.column { margin-left: 0; }
+  .nested.one-third.column { width: 33.3333333333% ;}
+  .nested.one-half.column { width: 50%;}  
 }
 
+/* For nested columns, the gutters get in the way sooner than 
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -903,7 +907,7 @@ aside, blockquote {
 }
 
 blockquote {
-  margin: 1.7em 2em;
+  margin: 1.7em 5%;
 }
 
 aside {

@@ -37,4 +37,42 @@ add_action( 'widgets_init', function() {
 	) );	
 });
 
+
+// Shortcodes
+add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
+add_shortcode( 'column', 'simplecommerce_shortcode_column' );
+
+function simplecommerce_shortcode_columns( $attrs, $content = '' ) {
+	$column_count = 0;
+	$column_regex = '/\[column\]/s';
+	// Detect the number of columns specified in the content so that we know how wide to make each one.
+	if ( preg_match_all( $column_regex, $content, $matches ) ) {
+		$column_count = count($matches[0]);
+	}
+
+	$content = preg_replace( $column_regex, "[column total_count='$column_count']", $content );
+
+	if ( $column_count == 0 ) {
+		return $content;
+	}
+
+	return "<div class='u-cf'>" . do_shortcode( $content ) . "</div>";
+}
+
+function simplecommerce_shortcode_column( $attrs, $content = '' ) {
+	$parsed_attrs = shortcode_atts( array(
+		'total_count' => 1
+	), $attrs );
+	$css_class = '';
+	switch( $parsed_attrs['total_count'] ) {
+		case '2':
+			$css_class = 'one-half';
+			break;
+		case '3':
+			$css_class = 'one-third';
+			break;
+	}
+	return "<div class='nested column $css_class'>$content</div>";
+}
+
 ?>
