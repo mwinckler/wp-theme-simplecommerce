@@ -5,6 +5,9 @@ add_theme_support( 'custom-header' );
 add_theme_support( 'title-tag' );
 add_theme_support( 'automatic-feed-links' );
 
+// Remove WordPress's auto paragraph "feature" because that's Markdown's job
+remove_filter( 'the_content', 'wpautop' );
+remove_filter( 'the_excerpt', 'wpautop' );
 
 // Enqueue main styles
 add_action( 'wp_enqueue_scripts', function() {
@@ -41,6 +44,12 @@ add_action( 'widgets_init', function() {
 // Shortcodes
 add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
+add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
+add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
+	$non_texturized_shortcodes[] = 'columns';
+	$non_texturized_shortcodes[] = 'column';
+	return $non_texturized_shortcodes;
+});
 
 function simplecommerce_shortcode_columns( $attrs, $content = '' ) {
 	$column_count = 0;
@@ -72,7 +81,36 @@ function simplecommerce_shortcode_column( $attrs, $content = '' ) {
 			$css_class = 'one-third';
 			break;
 	}
-	return "<div class='nested column $css_class'>$content</div>";
+	return "<div class='nested column $css_class'>" . do_shortcode( $content ) . "</div>";
+}
+
+function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
+	$parsed_attrs = shortcode_atts( array(
+		'name' => '',
+		'url' => '',
+		'image_url' => ''
+	), $attrs );
+
+	$cite = '';
+	$cite_img = '';
+
+	if ( !empty( $parsed_attrs['name'] ) ) {
+		$cite = $parsed_attrs['name'];
+
+		if ( !empty( $parsed_attrs['url'] ) ) {
+			$cite = "<a href='" . $parsed_attrs['url'] . "'>$cite</a>";
+		}
+
+		$cite = "<cite>$cite</cite>";
+	}
+
+	if ( !empty( $parsed_attrs['image_url'] ) ) {
+		$cite_img = "<img src='" . $parsed_attrs['image_url'] . "' alt='" . $parsed_attrs['name'] . "' class='cite_img' />";
+		if ( !empty( $parsed_attrs['url'] ) ) {
+			$cite_img = "<a href='" . $parsed_attrs['url'] . "'>$cite_img</a>";
+		}
+	}
+	return "<blockquote class='testimonial'>" . $content . $cite . $cite_img . "</blockquote>";
 }
 
 ?>
