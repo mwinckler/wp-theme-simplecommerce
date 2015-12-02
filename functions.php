@@ -139,12 +139,14 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 	$check_state = $parsed_attrs['initial_state'] == 'open' ? 'checked="checked"' : '';
 
 	return "<style type='text/css'>#sc-toggle-chk-$id { display: none; } #sc-toggle-$id { display: none; } #sc-toggle-chk-$id:checked ~ #sc-toggle-$id { display: block; }</style>" .
+			"<div class='toggle-container'>" .
 			"<input type='checkbox' id='sc-toggle-chk-$id' $check_state />" .
-			"<label class='toggle' for='sc-toggle-chk-$id'>" .
+			"<label class='toggle noselect' for='sc-toggle-chk-$id'>" .
 				"<i class='fa fa-angle-double-down fa-lg collapsed'></i>" .
 				"<i class='fa fa-angle-double-up fa-lg expanded'></i>" .
 				 $parsed_attrs['title'] . "</label>" .
-			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>";
+			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>" .
+			"</div>"; // .toggle-container
 
 }
 

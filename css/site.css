@@ -962,7 +962,7 @@ ul#menu-primary-nav:after {
 
 .footer-nav {
   width: 100%;
-  background: #222;
+  background: #222; /* COLOR: DarkBackground */
 }
 
 .testimonial {
@@ -990,15 +990,24 @@ ul#menu-primary-nav:after {
   box-shadow: 1px 2px 4px -1px #000;
 }
 
+
+/* Toggles */
+.toggle-container {
+  box-shadow: 0 2px 6px -2px #000;
+  border-radius: 5px;
+}
 label.toggle {
   cursor: pointer;
-  border: 1px solid #999; /* COLOR: LabelBorder */
+  color: #555; /* COLOR: LabelText */
   background: #f8f8f8; /* COLOR: LightBackground */
   border-radius: 3px;
   padding-left: 2em;
   position: relative;
-  border-width: 1px 1px 1px 0;
   margin-bottom: 15px;
+  text-shadow: 1px 0 0 #fff;
+}
+label.toggle i {
+  line-height: 1.2;
 }
 /*
 label.toggle:before {
@@ -1012,7 +1021,7 @@ input:checked + label.toggle > i.expanded {
   top: 0;
   left: 0;
   height: 100%;
-  background: #aaa; /* COLOR: DarkBackground */
+  background: #aaa; /* COLOR: ToggleAccentBackground */
   border-radius: 3px 0 0 3px;
   padding: 0 5px;
   margin: 0;
@@ -1027,15 +1036,22 @@ input + label.toggle > i.expanded {
 
 input:checked + label.toggle {
   border-radius: 3px 3px 0 0;
-  border-width: 1px 1px 0 0;
   margin-bottom: 0;
+
 }
 
 .toggle-content {
-  border: 1px solid #999; /* COLOR: ToggleBorder */
-  border-width: 0 1px 1px;
   background: #f8f8f8; /* COLOR: LightBackground */
   border-radius: 0 0 5px 5px;
   padding: 0.5em;
   margin-bottom: 15px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
