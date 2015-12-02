@@ -123,7 +123,7 @@ abbr[title] {
 
 b,
 strong {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /**
@@ -572,7 +572,7 @@ body {
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Montserrat", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Signika", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-top: 3rem;
   margin-bottom: 2rem;
   font-weight: 700; 
@@ -883,7 +883,7 @@ p.call-to-action {
 
 /* Link "buttons" */
 a.btn {
-  font-weight: bold;
+  font-weight: 600;
   line-height:2.5;
   padding: 10px 20px;
   text-decoration: none;
@@ -973,12 +973,13 @@ ul#menu-primary-nav:after {
   font-size: 0.9em;
   display: block;
   text-align: right;
-  margin-right: 70px;
   margin-top: 30px;
+  margin-right: 70px;  
 }
 .testimonial cite:before {
   content: "\2014"; /* &mdash; */
 }
+
 .testimonial .cite_img {
   position: absolute;
   right: -15px;
@@ -987,4 +988,54 @@ ul#menu-primary-nav:after {
   width: 80px;
   height: 80px;
   box-shadow: 1px 2px 4px -1px #000;
+}
+
+label.toggle {
+  cursor: pointer;
+  border: 1px solid #999; /* COLOR: LabelBorder */
+  background: #f8f8f8; /* COLOR: LightBackground */
+  border-radius: 3px;
+  padding-left: 2em;
+  position: relative;
+  border-width: 1px 1px 1px 0;
+  margin-bottom: 15px;
+}
+/*
+label.toggle:before {
+  content: "";
+}
+*/
+input + label.toggle > i.collapsed,
+input:checked + label.toggle > i.expanded {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #aaa; /* COLOR: DarkBackground */
+  border-radius: 3px 0 0 3px;
+  padding: 0 5px;
+  margin: 0;
+}
+input:checked + label.toggle > i.expanded {
+  border-radius: 3px 0 3px 0;
+}
+input:checked + label.toggle > i.collapsed,
+input + label.toggle > i.expanded {
+  display: none;
+}
+
+input:checked + label.toggle {
+  border-radius: 3px 3px 0 0;
+  border-width: 1px 1px 0 0;
+  margin-bottom: 0;
+}
+
+.toggle-content {
+  border: 1px solid #999; /* COLOR: ToggleBorder */
+  border-width: 0 1px 1px;
+  background: #f8f8f8; /* COLOR: LightBackground */
+  border-radius: 0 0 5px 5px;
+  padding: 0.5em;
+  margin-bottom: 15px;
 }

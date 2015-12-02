@@ -23,7 +23,7 @@ Use the `[columns]` shortcode to indicate which content should be broken up in t
 	[/column]
 	[/columns]
 
-### Testimonial boxes
+### Testimonial Boxes
 
 The `[testimonial]` shortcode generates a box to quote someone with a fancy attribution. It supports the following attributes:
 
@@ -36,3 +36,11 @@ Example:
 	[testimonial name="Matt Winckler" url="http://mattwinckler.com" image_url="//lh5.googleusercontent.com/-tLwbqygLOSc/AAAAAAAAAAI/AAAAAAAAAAA/GbHKSpB8i0w/s96-c-mo/photo.jpg"]
 	This WordPress theme is the cat's pajamas!
 	[/testimonial]
+
+### Toggled Content
+
+Use `[toggle]` to allow users to show or hide the content contained in the shortcode. Supported attributes:
+
+* `title` (required): The text to display in the clickable section to expand/collapse the content.
+* `initial_state` (optional): Indicates whether the toggled content should be visible or hidden on page load. Allowed values: `open`, `closed`. Defaults to `closed`.
+

@@ -11,7 +11,13 @@ remove_filter( 'the_excerpt', 'wpautop' );
 
 // Enqueue main styles
 add_action( 'wp_enqueue_scripts', function() {
+	global $wp_styles;
 	wp_enqueue_style( 'style-primary', get_bloginfo( 'stylesheet_directory' ) . '/css/site.css' );
+	wp_enqueue_style( 'fontawesome', get_bloginfo( 'stylesheet_directory' ) . '/css/font-awesome.min.css' );
+	//wp_enqueue_style( 'foundicons', get_bloginfo( 'stylesheet_directory' ) . '/css/general_foundicons.css' );
+	//wp_enqueue_style( 'foundicons-IE7', get_bloginfo( 'stylesheet_directory' ) . '/css/general_foundicons_ie7.css' );
+	//$wp_styles->add_data( 'foundicons-ie7', 'conditional', 'IE 7' );
+
 });
 
 // Nav menus
@@ -45,6 +51,7 @@ add_action( 'widgets_init', function() {
 add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
 add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
+add_shortcode( 'toggle', 'simplecommerce_shortcode_toggle' );
 add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
 	$non_texturized_shortcodes[] = 'columns';
 	$non_texturized_shortcodes[] = 'column';
@@ -92,25 +99,53 @@ function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
 	), $attrs );
 
 	$cite = '';
-	$cite_img = '';
+	$cite_style = '';
 
 	if ( !empty( $parsed_attrs['name'] ) ) {
 		$cite = $parsed_attrs['name'];
+
+		if ( !empty( $parsed_attrs['image_url'] ) ) {
+			$cite = $cite . "<img src='" . $parsed_attrs['image_url'] . "' alt='" . $parsed_attrs['name'] . "' class='cite_img' />";
+		} else {
+			// Ick. Have to do an inline style on the cite to get margin right in the absence of an image.
+			// Note intentional leading space.
+			$cite_style = " style='margin-right: 0;'";
+		}
 
 		if ( !empty( $parsed_attrs['url'] ) ) {
 			$cite = "<a href='" . $parsed_attrs['url'] . "'>$cite</a>";
 		}
 
-		$cite = "<cite>$cite</cite>";
+		$cite = "<cite$cite_style>$cite</cite>";
 	}
 
-	if ( !empty( $parsed_attrs['image_url'] ) ) {
-		$cite_img = "<img src='" . $parsed_attrs['image_url'] . "' alt='" . $parsed_attrs['name'] . "' class='cite_img' />";
-		if ( !empty( $parsed_attrs['url'] ) ) {
-			$cite_img = "<a href='" . $parsed_attrs['url'] . "'>$cite_img</a>";
-		}
-	}
-	return "<blockquote class='testimonial'>" . $content . $cite . $cite_img . "</blockquote>";
+
+
+	return "<blockquote class='testimonial'>" . $content . $cite . "</blockquote>";
+}
+
+
+function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
+	// The ID of each toggle-able must be unique per request for the CSS styling to work.
+	// This is not threadsafe. :P
+	static $simplecommerce_toggle_id = 0; 
+	$parsed_attrs = shortcode_atts( array(
+		'title' => '',
+		'initial_state' => 'closed'
+	), $attrs );
+
+	$id = ++$simplecommerce_toggle_id;
+
+	$check_state = $parsed_attrs['initial_state'] == 'open' ? 'checked="checked"' : '';
+
+	return "<style type='text/css'>#sc-toggle-chk-$id { display: none; } #sc-toggle-$id { display: none; } #sc-toggle-chk-$id:checked ~ #sc-toggle-$id { display: block; }</style>" .
+			"<input type='checkbox' id='sc-toggle-chk-$id' $check_state />" .
+			"<label class='toggle' for='sc-toggle-chk-$id'>" .
+				"<i class='fa fa-angle-double-down fa-lg collapsed'></i>" .
+				"<i class='fa fa-angle-double-up fa-lg expanded'></i>" .
+				 $parsed_attrs['title'] . "</label>" .
+			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>";
+
 }
 
 ?>
