@@ -552,7 +552,6 @@ th {
   .nested.one-half.column { width: 50%;}  
 }
 
-/* For nested columns, the gutters get in the way sooner than 
 
 /* Base Styles
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -600,9 +599,14 @@ h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
 /* Links
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 a {
-  color: #1EAEDB; }
+  color: #1eaedb; /* customizer_setting: color_link */
+}
+a:visited {
+  color: #845ba4; /* customizer_setting: color_link_visited */
+}
 a:hover {
-  color: #0FA0CE; }
+  color: #0fa0ce; /* customizer_setting: color_link_hover */
+}
 
 
 /* Buttons
@@ -757,8 +761,8 @@ code {
   margin: 0 .2rem;
   font-size: 90%;
   white-space: nowrap;
-  background: #F1F1F1;
-  border: 1px solid #E1E1E1;
+  background: #f8f8f8; /* customizer_setting: color_background_light */
+  border: 1px solid #E1E1E1; /* customizer_setting: color_border */
   border-radius: 4px; }
 pre > code {
   display: block;
@@ -772,7 +776,7 @@ th,
 td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #E1E1E1; }
+  border-bottom: 1px solid #E1E1E1; /* customizer_setting: color_border */ }
 th:first-child,
 td:first-child {
   padding-left: 0; }
@@ -823,7 +827,8 @@ hr {
   margin-top: 3rem;
   margin-bottom: 3.5rem;
   border-width: 0;
-  border-top: 1px solid #E1E1E1; }
+  border-top: 1px solid #E1E1E1; /* customizer_setting: color_border */
+}
 
 
 /* Clearing
@@ -887,21 +892,21 @@ a.btn {
   line-height:2.5;
   padding: 10px 20px;
   text-decoration: none;
-  background: #0073d4; /* COLOR: ButtonBackground */
-  color: #fff; /* COLOR: ButtonText */
+  background: #0073d4; /* customizer_setting: color_button_background */
+  color: #fff; /* customizer_setting: color_button_text */
   border-radius: 15px;
 }
 
 a.btn:hover {
-  background: #4fa5ed; /* COLOR: ButtonBackgroundHover */
-  color: #fff; /* COLOR: ButtonTextHover */
+  background: #4fa5ed; /* customizer_setting: color_button_background_hover */
+  color: #fff; /* customizer_setting: color_button_text_hover */
 }
 
 
 /* Common "box" styles */
 aside, blockquote {
   padding: 0.5em;
-  background: #f8f8f8; /* COLOR: LightBackground */
+  background: #f8f8f8; /* customizer_setting: color_background_light */
   border-radius: 2px;
   box-shadow: 0 2px 6px -2px #000;
 }
@@ -926,6 +931,7 @@ aside {
 #hero {
   text-align: center;
 }
+
 ul#menu-primary-nav { 
   margin: 0;
   text-align: center;
@@ -942,7 +948,7 @@ ul#menu-primary-nav li a {
 }
 ul#menu-primary-nav:before {
   content: "";
-  background: #999;
+  background: #E1E1E1; /* customizer_setting: color_border */
   position: absolute;
   top: 0;
   left: 25%;
@@ -952,7 +958,7 @@ ul#menu-primary-nav:before {
 
 ul#menu-primary-nav:after {
   content: "";
-  background: #999;
+  background: #E1E1E1; /* customizer_setting: color_border */
   position: absolute;
   bottom: 0;
   left: 25%;
@@ -962,7 +968,7 @@ ul#menu-primary-nav:after {
 
 .footer-nav {
   width: 100%;
-  background: #222; /* COLOR: DarkBackground */
+  background: #222; /* customizer_setting: color_background_dark */
 }
 
 .testimonial {
@@ -998,8 +1004,8 @@ ul#menu-primary-nav:after {
 }
 label.toggle {
   cursor: pointer;
-  color: #555; /* COLOR: LabelText */
-  background: #f8f8f8; /* COLOR: LightBackground */
+  color: #555; /* customizer_setting: color_label_text */
+  background: #f8f8f8; /* customizer_setting: color_background_light */
   border-radius: 3px;
   padding-left: 2em;
   position: relative;
@@ -1009,11 +1015,7 @@ label.toggle {
 label.toggle i {
   line-height: 1.2;
 }
-/*
-label.toggle:before {
-  content: "";
-}
-*/
+
 input + label.toggle > i.collapsed,
 input:checked + label.toggle > i.expanded {
   display: block;
@@ -1021,7 +1023,7 @@ input:checked + label.toggle > i.expanded {
   top: 0;
   left: 0;
   height: 100%;
-  background: #aaa; /* COLOR: ToggleAccentBackground */
+  background: #aaa; /* customizer_setting: color_accent_background */
   border-radius: 3px 0 0 3px;
   padding: 0 5px;
   margin: 0;
@@ -1041,7 +1043,7 @@ input:checked + label.toggle {
 }
 
 .toggle-content {
-  background: #f8f8f8; /* COLOR: LightBackground */
+  background: #f8f8f8; /* customizer_setting: color_background_light */
   border-radius: 0 0 5px 5px;
   padding: 0.5em;
   margin-bottom: 15px;

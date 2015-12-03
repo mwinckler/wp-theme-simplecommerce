@@ -20,12 +20,19 @@ add_action( 'wp_enqueue_scripts', function() {
 
 });
 
+// ==========================================================
 // Nav menus
+// ==========================================================
+
 add_action( 'after_setup_theme', function() {
 	register_nav_menu( 'primary', __( 'Primary Menu', 'simplecommerce' ) );
 });
 
+// ==========================================================
 // Sidebars
+// ==========================================================
+
+
 add_action( 'widgets_init', function() {
 	register_sidebar( array(
 		'name'		=> __( 'Footer Section 1', 'simplecommerce' ),
@@ -46,8 +53,10 @@ add_action( 'widgets_init', function() {
 	) );	
 });
 
-
+// ==========================================================
 // Shortcodes
+// ==========================================================
+
 add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
 add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
@@ -148,6 +157,214 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>" .
 			"</div>"; // .toggle-container
 
+}
+
+
+// ==========================================================
+// Theme Settings (Customizer)
+// ==========================================================
+
+add_action( 'customize_register', 'simplecommerce_customize_register' );
+
+function simplecommerce_customize_register( $wp_customize ) {
+	$wp_customize->add_setting( 'color_background_light', array(
+		'default' => '#f8f8f8',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_light', array( 
+		'label' => __( 'Light Background Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_background_light' ) ) );
+
+
+	$wp_customize->add_setting( 'color_link', array(
+		'default' => '#1eaedb',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link', array( 
+		'label' => __( 'Link Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_link' ) ) );
+
+	$wp_customize->add_setting( 'color_link_visited', array(
+		'default' => '#845ba4',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_visited', array( 
+		'label' => __( 'Link Visited Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_link_visited' ) ) );
+
+	$wp_customize->add_setting( 'color_link_hover', array(
+		'default' => '#0fa0ce',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_hover', array( 
+		'label' => __( 'Link Hover Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_link_hover' ) ) );
+
+
+	$wp_customize->add_setting( 'color_border', array(
+		'default' => '#e1e1e1',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_border', array( 
+		'label' => __( 'Border Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_border' ) ) );
+
+
+	$wp_customize->add_setting( 'color_button_background', array(
+		'default' => '#0073d4',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background', array( 
+		'label' => __( 'Button Background Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_button_background' ) ) );
+
+	$wp_customize->add_setting( 'color_button_background_hover', array(
+		'default' => '#4fa5ed',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background_hover', array( 
+		'label' => __( 'Button Background Hover Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_button_background_hover' ) ) );
+
+
+	$wp_customize->add_setting( 'color_button_text', array(
+		'default' => '#fff',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text', array( 
+		'label' => __( 'Button Text Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_button_text' ) ) );
+
+
+	$wp_customize->add_setting( 'color_button_text_hover', array(
+		'default' => '#fff',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text_hover', array( 
+		'label' => __( 'Button Text Hover Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_button_text_hover' ) ) );
+
+
+	$wp_customize->add_setting( 'color_background_dark', array(
+		'default' => '#222',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_dark', array( 
+		'label' => __( 'Dark Background Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_background_dark' ) ) );
+
+
+	$wp_customize->add_setting( 'color_label_text', array(
+		'default' => '#555',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_label_text', array( 
+		'label' => __( 'Label Text Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_label_text' ) ) );
+
+
+	$wp_customize->add_setting( 'color_accent_background', array(
+		'default' => '#aaa',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_accent_background', array( 
+		'label' => __( 'Accent Background Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_accent_background' ) ) );
+
+
+}
+
+
+add_action( 'wp_head', 'simplecommerce_customize_css');
+
+function is_valid_color( $color ) {
+	return preg_match( '/#([a-f0-9]{3}|[a-f0-9]{6})/', $color );
+}
+function ensure_starts_with( $subject, $start_str ) {
+	return ( strpos( $subject, $start_str, 0 ) !== FALSE )
+			? $subject
+			: $start_str . $subject;
+}
+function simplecommerce_customize_css() {
+	$color_background_light = get_theme_mod( 'color_background_light', '#f8f8f8' );
+	$color_label_text = get_theme_mod( 'color_label_text', '#555' );
+	$color_border = get_theme_mod( 'color_border', '#e1e1e1' );
+	$color_accent_background = get_theme_mod( 'color_accent_background', '#aaa' );
+	$color_link = get_theme_mod( 'color_link', '#1eaedb' );
+	$color_link_visited = get_theme_mod( 'color_link_visited', '#845ba4' );
+	$color_link_hover = get_theme_mod( 'color_link_hover', '#0fa0ce' );
+	$color_button_text = get_theme_mod( 'color_button_text', '#fff' );
+	$color_button_background = get_theme_mod( 'color_button_background', '#0073d4' );
+	$color_button_background_hover = get_theme_mod( 'color_button_background_hover', '#4fa5ed' );
+	$color_button_text_hover = get_theme_mod( 'color_button_text_hover', '#fff' );
+	$color_background_dark = get_theme_mod( 'color_background_dark', '#222' );
+
+	?>
+		<style type='text/css'>
+			<?php if ( !empty($color_background_light) )
+			code, aside, blockquote, label.toggle, .toggle-content {
+				background: <?php echo $color_background_light; ?>;
+			}
+			label.toggle {
+				color: <?php echo $color_label_text; ?>;
+			}
+			code, th, td, hr {
+				border-color: <?php echo $color_border; ?>;
+			} 
+			ul#menu-primary-nav:before, ul#menu-primary-nav:after {
+				background: <?php echo $color_border; ?>;
+			}
+
+			input + label.toggle > i.collapsed,
+			input:checked + label.toggle > i.expanded {
+				background: <?php echo $color_accent_background; ?>;
+			}
+
+			a {
+				color: <?php echo $color_link; ?>;
+			}
+			a:visited {
+				color: <?php echo $color_link_visited; ?>;
+			}
+			a:hover {
+				color: <?php echo $color_link_hover; ?>;
+			}
+
+			#hero h1, #hero h1 a, #hero h2, #hero h2 a {
+				color: #<?php echo get_header_textcolor(); ?>;
+			}
+
+			a.btn {
+				background: <?php echo $color_button_background; ?>;
+				color: <?php echo $color_button_text; ?>;
+			}
+			a.btn:hover {
+				background: <?php echo $color_button_background_hover; ?>;
+				color: <?php echo $color_button_text_hover; ?>;
+			}
+
+			.footer-nav {
+				background: <?php echo $color_background_dark; ?>;
+			}
+
+
+
+
+
+		</style>
+	<?php
 }
 
 ?>
