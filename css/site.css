@@ -578,6 +578,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 2rem;
   font-weight: 700; 
   text-align: center;
+  clear:both;
 }
 h1 { font-size: 4.0rem; line-height: 1.2;  letter-spacing: -.1rem;}
 h2 { font-size: 3.6rem; line-height: 1.25; letter-spacing: -.1rem; }
@@ -839,7 +840,8 @@ hr {
 /* Self Clearing Goodness */
 .container:after,
 .row:after,
-.u-cf {
+.u-cf,
+.clearfix {
   content: "";
   display: table;
   clear: both; }
@@ -906,7 +908,7 @@ a.btn:hover {
 
 
 /* Common "box" styles */
-aside, blockquote {
+aside, blockquote, .author-box {
   padding: 0.5em;
   background: #f8f8f8; /* customizer_setting: color_background_light */
   border-radius: 2px;
@@ -933,7 +935,9 @@ aside {
 #hero {
   text-align: center;
 }
-
+div.author-byline {
+  position: relative;
+}
 ul#menu-primary-nav { 
   margin: 0;
   text-align: center;
@@ -948,7 +952,8 @@ ul#menu-primary-nav li {
 ul#menu-primary-nav li a {
   text-decoration: none;
 }
-ul#menu-primary-nav:before {
+ul#menu-primary-nav:before,
+div.author-byline:before {
   content: "";
   background: #E1E1E1; /* customizer_setting: color_border */
   position: absolute;
@@ -958,7 +963,8 @@ ul#menu-primary-nav:before {
   width: 50%;
 }
 
-ul#menu-primary-nav:after {
+ul#menu-primary-nav:after,
+div.author-byline:after {
   content: "";
   background: #E1E1E1; /* customizer_setting: color_border */
   position: absolute;
@@ -1144,4 +1150,29 @@ article.comment.row .comment-content {
 .comment-date {
   font-size: 1.3rem;
 }
+/* Force "cancel reply" text onto next line */
+#reply-title small {
+  display: block;
+  font-size: 1.7rem;
+  font-style: italic;
+}
 
+.author-byline {
+  text-align: center;
+  font-size: 1.5rem;
+  font-style: italic;
+}
+
+.author-box {
+    box-shadow: 0 2px 6px -2px #000;
+
+}
+.author-box img {
+  float: left;
+  margin: .5em;
+}
+.author-box h2 {
+  clear: none;
+  text-align: left;
+  font-size: 3rem;
+}

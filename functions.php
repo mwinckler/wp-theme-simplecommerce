@@ -337,7 +337,7 @@ function simplecommerce_customize_css() {
 	?>
 		<style type='text/css'>
 		<?php if ( is_valid_color( $color_background_light ) ): ?>
-			code, aside, blockquote, label.toggle, .toggle-content {
+			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box {
 				background: <?php echo $color_background_light; ?>;
 			}
 		<?php endif;
