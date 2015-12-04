@@ -1,23 +1,43 @@
 <?php
 
-
 add_theme_support( 'custom-header' );
 add_theme_support( 'title-tag' );
 add_theme_support( 'automatic-feed-links' );
 
-// Remove WordPress's auto paragraph "feature" because that's Markdown's job
-remove_filter( 'the_content', 'wpautop' );
-remove_filter( 'the_excerpt', 'wpautop' );
+// This is bad, but necessary. wpautop(), apart from being a poor idea in the first place (IMO),
+// doesn't know anything about shortcodes and consistently breaks shortcodes with content. The
+// shortcode_unautop() function is supposed to undo the damage, but it uses regular expressions
+// like a hammer to solve a problem which in reality needs a token parser (nested tags) and
+// therefore does not work.
+//
+// That leaves the hapless theme/plugin developer three options:
+//
+// 1. Rejigger the shortcode filter priority to bump it ahead of wpautop(). This could break 
+//    other plugins relying on priority.
+// 2. Disable wpautop() entirely. (I would rejoice in principle, but most other people like wpautop.)
+// 3. Leave shortcodes broken and generating invalid output, and just recommend to users that they
+//    download a plugin to disable wpautop on a per-post basis.
+//
+// I'm taking option #1 here as the lesser evil. wpautop() still puts extraneous <p> elements all
+// over the dang place, but at least it no longer walks all over the shortcode-generated markup.
+//
+// For more information about this problem, see also:
+//
+// - https://core.trac.wordpress.org/ticket/6984
+// - https://core.trac.wordpress.org/ticket/14050
+// - http://customcreative.co.uk/resolving-wpautop-and-shortcodes/
+// - http://betterwp.net/protect-shortcodes-from-wpautop-and-the-likes/
+
+remove_filter( 'the_content', 'do_shortcode' );
+add_filter( 'the_content', 'do_shortcode', 9);
+
+
 
 // Enqueue main styles
 add_action( 'wp_enqueue_scripts', function() {
 	global $wp_styles;
 	wp_enqueue_style( 'style-primary', get_bloginfo( 'stylesheet_directory' ) . '/css/site.css' );
 	wp_enqueue_style( 'fontawesome', get_bloginfo( 'stylesheet_directory' ) . '/css/font-awesome.min.css' );
-	//wp_enqueue_style( 'foundicons', get_bloginfo( 'stylesheet_directory' ) . '/css/general_foundicons.css' );
-	//wp_enqueue_style( 'foundicons-IE7', get_bloginfo( 'stylesheet_directory' ) . '/css/general_foundicons_ie7.css' );
-	//$wp_styles->add_data( 'foundicons-ie7', 'conditional', 'IE 7' );
-
 });
 
 // ==========================================================
@@ -57,6 +77,7 @@ add_action( 'widgets_init', function() {
 // Shortcodes
 // ==========================================================
 
+
 add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
 add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
@@ -64,6 +85,7 @@ add_shortcode( 'toggle', 'simplecommerce_shortcode_toggle' );
 add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
 	$non_texturized_shortcodes[] = 'columns';
 	$non_texturized_shortcodes[] = 'column';
+	$non_texturized_shortcodes[] = 'testimonial';
 	return $non_texturized_shortcodes;
 });
 
@@ -292,73 +314,97 @@ add_action( 'wp_head', 'simplecommerce_customize_css');
 function is_valid_color( $color ) {
 	return preg_match( '/#([a-f0-9]{3}|[a-f0-9]{6})/', $color );
 }
-function ensure_starts_with( $subject, $start_str ) {
-	return ( strpos( $subject, $start_str, 0 ) !== FALSE )
+function ensure_starts_with( $subject, $start_with ) {
+	return ( strpos( $subject, $start_with, 0 ) !== FALSE )
 			? $subject
-			: $start_str . $subject;
+			: $start_with . $subject;
 }
 function simplecommerce_customize_css() {
-	$color_background_light = get_theme_mod( 'color_background_light', '#f8f8f8' );
-	$color_label_text = get_theme_mod( 'color_label_text', '#555' );
-	$color_border = get_theme_mod( 'color_border', '#e1e1e1' );
-	$color_accent_background = get_theme_mod( 'color_accent_background', '#aaa' );
-	$color_link = get_theme_mod( 'color_link', '#1eaedb' );
-	$color_link_visited = get_theme_mod( 'color_link_visited', '#845ba4' );
-	$color_link_hover = get_theme_mod( 'color_link_hover', '#0fa0ce' );
-	$color_button_text = get_theme_mod( 'color_button_text', '#fff' );
-	$color_button_background = get_theme_mod( 'color_button_background', '#0073d4' );
-	$color_button_background_hover = get_theme_mod( 'color_button_background_hover', '#4fa5ed' );
-	$color_button_text_hover = get_theme_mod( 'color_button_text_hover', '#fff' );
-	$color_background_dark = get_theme_mod( 'color_background_dark', '#222' );
+	$color_background_light = ensure_starts_with( get_theme_mod( 'color_background_light', '#f8f8f8' ), '#' );
+	$color_label_text = ensure_starts_with( get_theme_mod( 'color_label_text', '#555' ), '#' );
+	$color_border = ensure_starts_with( get_theme_mod( 'color_border', '#e1e1e1' ), '#' );
+	$color_accent_background = ensure_starts_with( get_theme_mod( 'color_accent_background', '#aaa' ), '#' );
+	$color_link = ensure_starts_with( get_theme_mod( 'color_link', '#1eaedb' ), '#' );
+	$color_link_visited = ensure_starts_with( get_theme_mod( 'color_link_visited', '#0078a0' ), '#' );
+	$color_link_hover = ensure_starts_with( get_theme_mod( 'color_link_hover', '#0fa0ce' ), '#' );
+	$color_header_text = ensure_starts_with( get_header_textcolor(), '#' );
+	$color_button_text = ensure_starts_with( get_theme_mod( 'color_button_text', '#fff' ), '#' );
+	$color_button_background = ensure_starts_with( get_theme_mod( 'color_button_background', '#0073d4' ), '#' );
+	$color_button_background_hover = ensure_starts_with( get_theme_mod( 'color_button_background_hover', '#4fa5ed' ), '#' );
+	$color_button_text_hover = ensure_starts_with( get_theme_mod( 'color_button_text_hover', '#fff' ), '#' );
+	$color_background_dark = ensure_starts_with( get_theme_mod( 'color_background_dark', '#222' ), '#' );
 
 	?>
 		<style type='text/css'>
-			<?php if ( !empty($color_background_light) )
+		<?php if ( is_valid_color( $color_background_light ) ): ?>
 			code, aside, blockquote, label.toggle, .toggle-content {
 				background: <?php echo $color_background_light; ?>;
 			}
+		<?php endif;
+		if ( is_valid_color( $color_label_text ) ): ?>
 			label.toggle {
 				color: <?php echo $color_label_text; ?>;
 			}
+		<?php endif;
+		if ( is_valid_color( $color_border ) ): ?>
 			code, th, td, hr {
 				border-color: <?php echo $color_border; ?>;
 			} 
 			ul#menu-primary-nav:before, ul#menu-primary-nav:after {
 				background: <?php echo $color_border; ?>;
 			}
-
+		<?php endif;
+		if ( is_valid_color( $color_accent_background ) ): ?>
 			input + label.toggle > i.collapsed,
 			input:checked + label.toggle > i.expanded {
 				background: <?php echo $color_accent_background; ?>;
 			}
-
+		<?php endif;
+		if ( is_valid_color( $color_link ) ): ?>
 			a {
 				color: <?php echo $color_link; ?>;
 			}
+		<?php endif;
+		if ( is_valid_color( $color_link_visited ) ): ?>
 			a:visited {
 				color: <?php echo $color_link_visited; ?>;
 			}
+		<?php endif;
+		if ( is_valid_color( $color_link_hover ) ): ?>
 			a:hover {
 				color: <?php echo $color_link_hover; ?>;
 			}
-
+		<?php endif;
+		if ( is_valid_color( $color_header_text ) ): ?>
 			#hero h1, #hero h1 a, #hero h2, #hero h2 a {
-				color: #<?php echo get_header_textcolor(); ?>;
+				color: #<?php echo $color_header_text; ?>;
 			}
-
+		<?php endif;
+		if ( is_valid_color( $color_button_text ) || is_valid_color( $color_button_background ) ): ?>
 			a.btn {
-				background: <?php echo $color_button_background; ?>;
-				color: <?php echo $color_button_text; ?>;
+				<?php if ( is_valid_color( $color_button_background ) ) {
+					echo "background: $color_button_background; ";
+				}
+				if (is_valid_color( $color_button_text ) ) {
+					echo "color: $color_button_text;";
+				} ?>
 			}
+		<?php endif;
+		if ( is_valid_color( $color_button_background_hover ) || is_valid_color( $color_button_text_hover ) ): ?>
 			a.btn:hover {
-				background: <?php echo $color_button_background_hover; ?>;
-				color: <?php echo $color_button_text_hover; ?>;
+				<?php if ( is_valid_color( $color_button_background_hover ) ) {
+					echo "background: $color_button_background_hover;";
+				}
+				if ( is_valid_color( $color_button_text_hover ) ) {
+					echo "color: $color_button_text_hover;";
+				} ?>
 			}
-
+		<?php endif;
+		if ( is_valid_color( $color_background_dark ) ): ?>
 			.footer-nav {
 				background: <?php echo $color_background_dark; ?>;
 			}
-
+		<?php endif; ?>
 
 
 

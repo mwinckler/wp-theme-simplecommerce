@@ -44,3 +44,9 @@ Use `[toggle]` to allow users to show or hide the content contained in the short
 * `title` (required): The text to display in the clickable section to expand/collapse the content.
 * `initial_state` (optional): Indicates whether the toggled content should be visible or hidden on page load. Allowed values: `open`, `closed`. Defaults to `closed`.
 
+## Images
+
+By default, images within an `article` tag (used by posts and pages) are given a small drop shadow. To eliminate this, add the `noshadow` CSS class to the image declaration. Example:
+
+	<img src="myimage.png" alt="Beautiful, and with no shadow" class="noshadow" />
+
