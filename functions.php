@@ -294,6 +294,17 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'section' => 'colors',
 		'settings' => 'color_background_dark' ) ) );
 
+	$wp_customize->add_setting( 'color_footer_text', array(
+		'default' => '#eee',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_footer_text', array( 
+		'label' => __( 'Footer Text Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_footer_text' ) ) );
+
+
+
 
 	$wp_customize->add_setting( 'color_label_text', array(
 		'default' => '#555',
@@ -351,6 +362,7 @@ function simplecommerce_customize_css() {
 	$color_button_background_hover = ensure_starts_with( get_theme_mod( 'color_button_background_hover', '#4fa5ed' ), '#' );
 	$color_button_text_hover = ensure_starts_with( get_theme_mod( 'color_button_text_hover', '#fff' ), '#' );
 	$color_background_dark = ensure_starts_with( get_theme_mod( 'color_background_dark', '#222' ), '#' );
+	$color_footer_text = ensure_starts_with( get_theme_mod( 'color_footer_text', '#eee' ), '#' );
 
 	?>
 		<style type='text/css'>
@@ -418,9 +430,14 @@ function simplecommerce_customize_css() {
 				} ?>
 			}
 		<?php endif;
-		if ( is_valid_color( $color_background_dark ) ): ?>
-			.footer-nav {
-				background: <?php echo $color_background_dark; ?>;
+		if ( is_valid_color( $color_background_dark ) || is_valid_color( $color_footer_text ) ): ?>
+			.footer-nav, nav.pagination span.page_numbers {
+				<?php if ( is_valid_color( $color_background_dark ) ) {
+					echo "background: $color_background_dark;";
+				}
+				if ( is_valid_color( $color_footer_text ) ) {
+					echo "color: $color_footer_text;";
+				} ?>
 			}
 		<?php endif; ?>
 

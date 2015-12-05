@@ -21,14 +21,28 @@
 						comments_template();
 					}
 
-					the_post_navigation( array(
-						'next_text' => '%title',
-						'prev_text' => '%title'
-					) );
 				}
 			} else {
 				get_template_part( 'content', 'none' );
 			} 
+		?>
+		</div>
+	</div>
+
+	<div class="row post-navigation">
+		<div class="twelve columns">
+		<?php
+
+		$post_nav = get_the_post_navigation( array(
+			'next_text' => '<i class="fa fa-arrow-circle-left"></i> %title',
+			'prev_text' => '%title <i class="fa fa-arrow-circle-right"></i>'
+		) );
+
+		if ( !empty( $post_nav ) ) {
+			echo "<h2>More " . get_bloginfo( 'title' ) . "</h2>";
+			echo $post_nav;
+		}
+
 		?>
 		</div>
 	</div>

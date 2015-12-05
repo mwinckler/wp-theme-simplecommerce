@@ -10,14 +10,6 @@
 		} else {
 			get_template_part( 'content', 'none' );
 		} 
-
-
-		// Previous/next page navigation.
-		the_posts_pagination( array(
-			'prev_text'          => __( 'Previous page', 'simplecommerce' ),
-			'next_text'          => __( 'Next page', 'simplecommerce' ),
-			'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'simplecommerce' ) . ' </span>',
-		) );
 	}
 
 ?>
@@ -28,6 +20,14 @@
 		</div>
 	</div>
 
+	<div class="row post-navigation">
+		<div class="twelve columns">
+		<?php
+		echo get_next_posts_link( '<i class="fa fa-arrow-circle-left"></i> Older' );
+		echo get_previous_posts_link ( 'Newer <i class="fa fa-arrow-circle-right"></i>' );
+		?>
+		</div>
+	</div>
 
 <?php
 	get_footer();
