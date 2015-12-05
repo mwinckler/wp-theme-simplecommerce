@@ -82,10 +82,12 @@ add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
 add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
 add_shortcode( 'toggle', 'simplecommerce_shortcode_toggle' );
+add_shortcode( 'contentbox', 'simplecommerce_shortcode_contentbox' );
 add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
 	$non_texturized_shortcodes[] = 'columns';
 	$non_texturized_shortcodes[] = 'column';
 	$non_texturized_shortcodes[] = 'testimonial';
+	$non_texturized_shortcodes[] = 'contentbox';
 	return $non_texturized_shortcodes;
 });
 
@@ -179,6 +181,13 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>" .
 			"</div>"; // .toggle-container
 
+}
+
+function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
+	$parsed_attrs = shortcode_atts( array(
+		'align' => 'right'
+	), $attrs );
+	return "<aside class='content-box " . $parsed_attrs['align'] . "'>" . do_shortcode( $content ) . "</aside>";
 }
 
 
@@ -304,6 +313,15 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'label' => __( 'Accent Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_accent_background' ) ) );
+
+	$wp_customize->add_setting( 'color_header_stripe', array(
+		'default' => '',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_header_stripe', array( 
+		'label' => __( 'Header Stripe Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_header_stripe' ) ) );
 
 
 }

@@ -13,13 +13,17 @@
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>
-
+		<?php 
+			$custom_header_img = get_custom_header()->url; 
+			$header_stripe_color = ensure_starts_with( get_theme_mod( 'color_header_stripe', '' ), '#' );
+			if ( is_valid_color( $header_stripe_color ) ): ?>
+				<div class="header-stripe" style="background: <?php echo $header_stripe_color; ?>;"></div>
+			<?php endif;
+		?>
 		<div class="container">
 			<div class="row">
-				<?php 
-					$custom_header_img = get_custom_header()->url; 
-				?>
-				<div class="twelve columns" id="hero" <?php echo $custom_header_img ? "style=\"background-image:url('$custom_header_img') 50% 50% no-repeat;\"" : "" ?>>
+
+				<div class="twelve columns" id="hero" <?php echo $custom_header_img ? "style=\"background-image:url('$custom_header_img');\"" : "" ?>>
 					<hgroup>
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 						<h2 class="site-subtitle"><?php bloginfo( 'description' ); ?></h2>
