@@ -9,14 +9,8 @@
 					the_post();
 					get_template_part( 'content', get_post_format() );
 
-					// Author box
-					?>
-					<div class="twelve columns author-box clearfix">
-						<img src="<?php echo get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 150, 'default' => 'mm' ) ); ?>" alt="" />
-						<h2>About the Author: <?php the_author(); ?></h2>
-						<?php echo get_the_author_meta( 'description' ); ?>
-					</div>
-					<?php
+					simplecommerce_author_box();
+
 					if ( comments_open() || get_comments_number() ) {
 						comments_template();
 					}

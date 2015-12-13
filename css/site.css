@@ -1242,3 +1242,48 @@ ul.widget-area h2.widgettitle {
 #wp-calendar th, #wp-calendar td {
   padding: 5px;
 }
+
+.archive h2.post-title {
+  margin-top: 0;
+  font-size: 2.8rem;
+  text-align: left;
+}
+.archive article {
+  margin-bottom: 40px;
+}
+
+div.post-date {
+  position: relative;
+  background: #aaa; /* customizer_setting: color_accent_background */
+  max-width: 120px;
+  line-height: 1.2;
+}
+div.post-date:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 20px solid #fff;
+  border-left: 20px solid #f8f8f8;
+  width: 0;
+}
+@media(max-width: 800px) {
+  div.post-date:before {
+    border: 0;
+  }
+}
+span.post-date-month,
+span.post-date-day,
+span.post-date-year {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 2rem;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+}
+span.post-date-day {
+  font-size: 3.7rem;
+}
+span.post-date-year {
+  background: #f8f8f8; /* customize_setting: color_background_light */
+}

@@ -2,10 +2,16 @@
 	get_header();
 
 	function simplecommerce_index_add_main_content() {
+		$is_page = is_page();
+
 		if ( have_posts() ) {
 			while ( have_posts() ) {
 				the_post();
 				get_template_part( 'content', get_post_format() );
+
+				if ( !$is_page ) {
+					simplecommerce_author_box();
+				}
 			}
 		} else {
 			get_template_part( 'content', 'none' );

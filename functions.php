@@ -367,7 +367,7 @@ function simplecommerce_customize_css() {
 	?>
 		<style type='text/css'>
 		<?php if ( is_valid_color( $color_background_light ) ): ?>
-			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box {
+			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box, span.post-date-year {
 				background: <?php echo $color_background_light; ?>;
 			}
 		<?php endif;
@@ -386,7 +386,8 @@ function simplecommerce_customize_css() {
 		<?php endif;
 		if ( is_valid_color( $color_accent_background ) ): ?>
 			input + label.toggle > i.collapsed,
-			input:checked + label.toggle > i.expanded {
+			input:checked + label.toggle > i.expanded,
+			div.post-date {
 				background: <?php echo $color_accent_background; ?>;
 			}
 		<?php endif;
@@ -446,6 +447,17 @@ function simplecommerce_customize_css() {
 
 		</style>
 	<?php
+}
+
+// Must be called from within the loop.
+function simplecommerce_author_box() {
+?>
+	<div class="twelve columns author-box clearfix">
+		<img src="<?php echo get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 150, 'default' => 'mm' ) ); ?>" alt="" />
+		<h2>About the Author: <?php the_author(); ?></h2>
+		<?php echo get_the_author_meta( 'description' ); ?>
+	</div>
+<?php
 }
 
 ?>

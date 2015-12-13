@@ -12,7 +12,7 @@
 
 		if ( !is_page() ): ?>
 			<div class="author-byline">
-				<time><?php the_date(); ?></time> 
+				<time><?php the_time( 'F jS, Y' ); ?></time> 
 				&SmallCircle; 
 				<span><?php the_author(); ?></span> 
 				<?php
