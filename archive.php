@@ -12,10 +12,11 @@
 				?>
 				<div class="row">
 					<div class="two columns">
-						<div class="post-date">
-							<span class="post-date-month"><?php the_time( 'M' ); ?></span>
-							<span class="post-date-day"><?php the_time( 'j' ); ?></span>
-							<span class="post-date-year"><?php the_time( 'Y' ); ?></span>
+						<div class="post-meta" style="background-image: url('<?php echo get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 128, 'default' => 'blank' ) ); ?>');">
+							<div class="post-date">
+								<?php the_time( 'M. jS, Y' ); ?>
+							</div>
+							<span class="post-author"><?php the_author(); ?></span>
 						</div>
 					</div>
 					<div class="ten columns">

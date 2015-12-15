@@ -154,7 +154,7 @@ function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
 
 
 
-	return "<blockquote class='testimonial'>" . $content . $cite . "</blockquote>";
+	return "<blockquote class='testimonial'>" . do_shortcode( $content ) . $cite . "</blockquote>";
 }
 
 
@@ -367,7 +367,7 @@ function simplecommerce_customize_css() {
 	?>
 		<style type='text/css'>
 		<?php if ( is_valid_color( $color_background_light ) ): ?>
-			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box, span.post-date-year {
+			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box {
 				background: <?php echo $color_background_light; ?>;
 			}
 		<?php endif;
@@ -386,8 +386,7 @@ function simplecommerce_customize_css() {
 		<?php endif;
 		if ( is_valid_color( $color_accent_background ) ): ?>
 			input + label.toggle > i.collapsed,
-			input:checked + label.toggle > i.expanded,
-			div.post-date {
+			input:checked + label.toggle > i.expanded {
 				background: <?php echo $color_accent_background; ?>;
 			}
 		<?php endif;
