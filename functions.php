@@ -29,7 +29,7 @@ add_theme_support( 'automatic-feed-links' );
 // - http://betterwp.net/protect-shortcodes-from-wpautop-and-the-likes/
 
 remove_filter( 'the_content', 'do_shortcode' );
-add_filter( 'the_content', 'do_shortcode', 9);
+add_filter( 'the_content', 'do_shortcode', 9 );
 
 
 
@@ -77,7 +77,6 @@ add_action( 'widgets_init', function() {
 // Shortcodes
 // ==========================================================
 
-
 add_shortcode( 'columns', 'simplecommerce_shortcode_columns' );
 add_shortcode( 'column', 'simplecommerce_shortcode_column' );
 add_shortcode( 'testimonial', 'simplecommerce_shortcode_testimonial' );
@@ -90,6 +89,14 @@ add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
 	$non_texturized_shortcodes[] = 'contentbox';
 	return $non_texturized_shortcodes;
 });
+
+function simplecommerce_parse_markdown( $content ) {
+	if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'markdown' ) ) {
+		return WPCom_Markdown::get_instance()->transform( $content );
+	}
+
+	return $content;	
+}
 
 function simplecommerce_shortcode_columns( $attrs, $content = '' ) {
 	$column_count = 0;
@@ -121,7 +128,7 @@ function simplecommerce_shortcode_column( $attrs, $content = '' ) {
 			$css_class = 'one-third';
 			break;
 	}
-	return "<div class='nested column $css_class'>" . do_shortcode( $content ) . "</div>";
+	return "<div class='nested column $css_class'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . "</div>";
 }
 
 function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
@@ -152,9 +159,7 @@ function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
 		$cite = "<cite$cite_style>$cite</cite>";
 	}
 
-
-
-	return "<blockquote class='testimonial'>" . do_shortcode( $content ) . $cite . "</blockquote>";
+	return "<blockquote class='testimonial'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . $cite . "</blockquote>";
 }
 
 
@@ -178,7 +183,7 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 				"<i class='fa fa-angle-double-down fa-lg collapsed'></i>" .
 				"<i class='fa fa-angle-double-up fa-lg expanded'></i>" .
 				 $parsed_attrs['title'] . "</label>" .
-			"<div id='sc-toggle-$id' class='toggle-content'>" . $content . "</div>" .
+			"<div id='sc-toggle-$id' class='toggle-content' markdown='1'>" . simplecommerce_parse_markdown( $content ) . "</div>" .
 			"</div>"; // .toggle-container
 
 }
@@ -187,7 +192,7 @@ function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
 	$parsed_attrs = shortcode_atts( array(
 		'align' => 'right'
 	), $attrs );
-	return "<aside class='content-box " . $parsed_attrs['align'] . "'>" . do_shortcode( $content ) . "</aside>";
+	return "<aside class='content-box " . $parsed_attrs['align'] . "'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . "</aside>";
 }
 
 
