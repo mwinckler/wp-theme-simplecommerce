@@ -753,7 +753,7 @@ ul ol,
 ol ol,
 ol ul {
   margin: 1.5rem 0 1.5rem 3rem;
-  font-size: 90%; }
+}
 li {
   margin-bottom: 1rem; }
 
@@ -1133,12 +1133,39 @@ article.comment.row .column {
 article.comment.row .comment-content {
   width: 70%;
 }
+.comment-content {
+  padding: 0.5rem;
+}
 
-/* TODO: Make responsive */
+article.post {
+  margin-bottom: 50px;
+}
+
 @media(max-width: 549px) {
   li.comment div.comment-author {
-    background-position: 0 50%;
-    /* padding: ;*/
+    float: none;
+  }
+
+  article.comment.row .column {
+    float: none;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .comment-author-avatar {
+    background-position: 50% 40%;
+    width: 125px;
+    height: 3em;
+    float: left;
+  }
+
+  .comment-date {
+    display: none;
+  }
+
+  ol.children {
+    margin-left: 0;
   }
 }
 .author-link {
@@ -1148,6 +1175,7 @@ article.comment.row .comment-content {
   font-size: 1.8rem;
   font-weight: 600;
   text-shadow: -1px -1px #fff;
+  margin-top: 0.5em;
 }
 
 .reply {
@@ -1191,6 +1219,13 @@ article.comment.row .comment-content {
   font-size: 3rem;
 }
 
+@media(max-width: 549px) {
+  .author-box img {
+    float: none;
+    margin: 0 auto;
+  }
+
+}
 .content-box.left {
   float: left;
 }
@@ -1267,4 +1302,9 @@ div.post-meta {
 }
 .post-meta .post-author {
   display: block;
+}
+
+div.comments-link {
+  text-align: center;
+  margin: 15px auto;
 }

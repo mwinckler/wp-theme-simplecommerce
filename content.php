@@ -32,6 +32,21 @@
 
 		the_content( __( 'Continue reading...', 'simplecommerce' ) );
 
+		if ( !is_single() )  {
+		?>
+		<div class="comments-link">
+			<i class="fa fa-comments"></i> <?php comments_popup_link( __( 'Reply', 'simplecommerce' ), __( '1 Comment', 'simplecommerce' ), __( '% Comments', 'simplecommerce' ) ); ?>
+		</div>
+		<?php
+
+		if ( get_post_type() != 'page' ) {
+			simplecommerce_author_box();
+		}
+
+
+		}	
+
+
 		wp_link_pages( array(
 			'before'		=> '<nav class="pagination">',
 			'after'			=> '</nav>'

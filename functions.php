@@ -65,12 +65,6 @@ add_action( 'widgets_init', function() {
 		'id'		=> 'footer-col-2',
 		'description' => __( 'Widgets added to this sidebar will be displayed in the second column of the footer.' )
 	) );
-
-	register_sidebar( array(
-		'name'		=> __( 'Footer Section 3', 'simplecommerce' ),
-		'id'		=> 'footer-col-3',
-		'description' => __( 'Widgets added to this sidebar will be displayed in the third column of the footer.' )
-	) );	
 });
 
 // ==========================================================
@@ -456,7 +450,7 @@ function simplecommerce_customize_css() {
 // Must be called from within the loop.
 function simplecommerce_author_box() {
 ?>
-	<div class="twelve columns author-box clearfix">
+	<div class="author-box clearfix">
 		<img src="<?php echo get_avatar_url( get_the_author_meta( 'ID' ), array( 'size' => 150, 'default' => 'mm' ) ); ?>" alt="" />
 		<h2>About the Author: <?php the_author(); ?></h2>
 		<?php echo get_the_author_meta( 'description' ); ?>

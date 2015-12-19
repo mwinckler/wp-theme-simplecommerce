@@ -8,10 +8,6 @@
 			while ( have_posts() ) {
 				the_post();
 				get_template_part( 'content', get_post_format() );
-
-				if ( !$is_page ) {
-					simplecommerce_author_box();
-				}
 			}
 		} else {
 			get_template_part( 'content', 'none' );

@@ -67,7 +67,7 @@ function simplecommerce_comment( $comment, $args, $depth ) {
 
 ?>
 
-<div class="comments-section">
+<div id="comments" class="comments-section">
 <?php if ( have_comments() ): ?>
 	<h2>And now, from you:</h2>
 
