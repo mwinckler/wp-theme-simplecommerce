@@ -943,6 +943,14 @@ aside {
   background-repeat: no-repeat;
 }
 
+h1.site-title {
+  font-family: "Dancing Script", "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+h2.site-subtitle {
+  font-size: 3.2rem;
+}
+
 div.author-byline {
   position: relative;
 }
