@@ -954,21 +954,21 @@ h2.site-subtitle {
 div.author-byline {
   position: relative;
 }
-#nav-primary ul#menu { 
+#nav-primary ul.menu { 
   margin: 0;
   text-align: center;
   list-style: none outside none;
   position: relative;
 }
-#nav-primary ul#menu li {
+#nav-primary ul.menu li {
   display: inline;
   margin: 0;
   padding: 5px 10px;
 }
-#nav-primary ul#menu li a {
+#nav-primary ul.menu li a {
   text-decoration: none;
 }
-#nav-primary ul#menu:before,
+#nav-primary ul.menu:before,
 div.author-byline:before,
 div.post-date:before {
   content: "";
@@ -980,7 +980,7 @@ div.post-date:before {
   width: 50%;
 }
 
-#nav-primary ul#menu:after,
+#nav-primary ul.menu:after,
 div.author-byline:after,
 div.post-date:after {
   content: "";
