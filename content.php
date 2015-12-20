@@ -4,13 +4,15 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<?php 
+		$is_page = get_post_type() == 'page';
+
 		if ( is_single() ) {
 			the_title( '<h1>', '</h1>' );
 		} else {
 			the_title( sprintf( '<h1><a href="%s">', esc_url( get_permalink() ) ), '</a></h1>' );
 		}
 
-		if ( !is_page() ): ?>
+		if ( !$is_page ): ?>
 			<div class="author-byline">
 				<time><?php the_time( 'F jS, Y' ); ?></time> 
 				&SmallCircle; 
@@ -32,19 +34,20 @@
 
 		the_content( __( 'Continue reading...', 'simplecommerce' ) );
 
-		if ( !is_single() )  {
-		?>
-		<div class="comments-link">
-			<i class="fa fa-comments"></i> <?php comments_popup_link( __( 'Reply', 'simplecommerce' ), __( '1 Comment', 'simplecommerce' ), __( '% Comments', 'simplecommerce' ) ); ?>
-		</div>
-		<?php
-
 		if ( get_post_type() != 'page' ) {
 			simplecommerce_author_box();
 		}
 
-
-		}	
+		if ( !is_single() && !$is_page  )  {
+		?>
+		<div class="comments-link">
+			<span>
+				<i class="fa fa-comments"></i>
+				<?php comments_popup_link( __( 'Reply', 'simplecommerce' ), __( '1 Comment', 'simplecommerce' ), __( '% Comments', 'simplecommerce' ) ); ?>
+			</span>
+		</div>
+		<?php
+		}
 
 
 		wp_link_pages( array(

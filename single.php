@@ -9,8 +9,6 @@
 					the_post();
 					get_template_part( 'content', get_post_format() );
 
-					simplecommerce_author_box();
-
 					if ( comments_open() || get_comments_number() ) {
 						comments_template();
 					}

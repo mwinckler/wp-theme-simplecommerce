@@ -65,6 +65,13 @@ add_action( 'widgets_init', function() {
 		'id'		=> 'footer-col-2',
 		'description' => __( 'Widgets added to this sidebar will be displayed in the second column of the footer.' )
 	) );
+
+	register_sidebar( array(
+		'name'		=> __( 'Right Sidebar', 'simplecommerce' ),
+		'id'		=> 'right',
+		'description' => __( 'Widgets added to this sidebar will be displayed on the right-hand side of the course template page.' )
+	) );
+
 });
 
 // ==========================================================
