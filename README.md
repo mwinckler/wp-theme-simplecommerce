@@ -54,3 +54,6 @@ By default, images within an `article` tag (used by posts and pages) are given a
 
 	<img src="myimage.png" alt="Beautiful, and with no shadow" class="noshadow" />
 
+## Buttons
+
+There are two available styles for buttons, based on the [Skeleton grid system](http://getskeleton.com/#buttons). Normal `<button>` and `<input type="submit">` elements get a plain button style, which can also be added to `<a>` elements via the `.button` CSS class. There is also a colorful button style which can be applied to any of these elements via the `.button-primary` class. The `.button-primary` color in this theme is also configurable via the WordPress Customizer under the "Colors" section (`Button Background Color`, `Button Background Hover Color`, `Button Text Color`, and `Button Text Hover Color`).

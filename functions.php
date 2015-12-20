@@ -71,7 +71,6 @@ add_action( 'widgets_init', function() {
 		'id'		=> 'right',
 		'description' => __( 'Widgets added to this sidebar will be displayed on the right-hand side of the course template page.' )
 	) );
-
 });
 
 // ==========================================================
