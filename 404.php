@@ -1,12 +1,15 @@
 <?php get_header(); ?>
 
 	<div class="row">
-		<div class="three columns">
-			<i class="fa fa-frown-o fa-5x fa-pull-right"></i>
+		<div class="twelve columns">
+			<h2>Oops, that didn't work.</h2>
 		</div>
-		<div class="nine columns">
-			<p>Oops, that didn't work.</p>
+	</div>
 
+	</div>
+	<div class="row">
+		<div class="six columns offset-by-three">
+			<i class="fa fa-frown-o fa-5x fa-pull-left"></i>
 			<p>Try a search:</p>
 			<?php 
 

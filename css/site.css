@@ -968,8 +968,17 @@ div.author-byline {
 #nav-primary ul.menu li {
   display: inline;
   margin: 0;
-  padding: 5px 10px;
+  padding: 5px 0px;
 }
+#nav-primary ul.menu li:before {
+  content: "○";
+  padding: 0 15px 0 10px;
+}
+#nav-primary ul.menu li:first-child:before {
+  content: "";
+  padding: 0;
+}
+
 #nav-primary ul.menu li a {
   text-decoration: none;
 }
