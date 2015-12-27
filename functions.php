@@ -451,6 +451,11 @@ function simplecommerce_customize_css() {
 			}
 		<?php endif;
 		if ( is_valid_color( $color_button_text ) || is_valid_color( $color_button_background ) ): ?>
+			.button,
+			button,
+			input[type="submit"],
+			input[type="reset"],
+			input[type="button"],
 			a.btn {
 				<?php if ( is_valid_color( $color_button_background ) ) {
 					echo "background: $color_button_background; ";
@@ -461,6 +466,16 @@ function simplecommerce_customize_css() {
 			}
 		<?php endif;
 		if ( is_valid_color( $color_button_background_hover ) || is_valid_color( $color_button_text_hover ) ): ?>
+			.button:hover,
+			button:hover,
+			input[type="submit"]:hover,
+			input[type="reset"]:hover,
+			input[type="button"]:hover,
+			.button:focus,
+			button:focus,
+			input[type="submit"]:focus,
+			input[type="reset"]:focus,
+			input[type="button"]:focus,
 			a.btn:hover {
 				<?php if ( is_valid_color( $color_button_background_hover ) ) {
 					echo "background: $color_button_background_hover;";

@@ -1300,6 +1300,9 @@ ul.widget-area {
 ul.widget-area h2.widgettitle {
   font-size: 3rem;
 }
+ul.widget-area ul {
+  list-style-type: none;
+}
 
 #wp-calendar th, #wp-calendar td {
   padding: 5px;
