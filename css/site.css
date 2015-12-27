@@ -953,6 +953,7 @@ h1.site-title {
 }
 h2.site-subtitle {
   font-size: 3.2rem;
+  margin: -20px 0 40px;
 }
 
 div.author-byline {
