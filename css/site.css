@@ -1358,3 +1358,7 @@ textarea#comment {
   width: 100%;
   height: 20rem;
 }
+
+.columns img {
+  max-width: 100%;
+}
