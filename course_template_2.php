@@ -1,6 +1,6 @@
 <?php		
 /**
- * Template Name: Course 2 Page
+ * Template Name: Course Page
  */
 	get_header();
 ?>
