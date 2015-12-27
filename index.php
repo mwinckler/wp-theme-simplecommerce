@@ -14,6 +14,10 @@
 					the_post();
 					$visible_post_ids[] = get_the_ID();
 					get_template_part( 'content', get_post_format() );
+
+					if ( is_home() ) {
+						break;
+					}
 				}
 			} else {
 				get_template_part( 'content', 'none' );

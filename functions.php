@@ -203,14 +203,27 @@ function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
 add_action( 'customize_register', 'simplecommerce_customize_register' );
 
 function simplecommerce_customize_register( $wp_customize ) {
+	//####################################
+	// Color settings
+	//####################################
+
 	$wp_customize->add_setting( 'color_background_light', array(
 		'default' => '#f8f8f8',
 		'transport' => 'refresh'
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_light', array( 
-		'label' => __( 'Light Background Color', 'simplecommerce' ),
+		'label' => __( 'Aside/Box Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_background_light' ) ) );
+
+	$wp_customize->add_setting( 'color_box_foreground', array(
+		'default' => '#222',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_box_foreground', array( 
+		'label' => __( 'Aside/Box Text Color', 'simplecommerce' ),
+		'section' => 'colors',
+		'settings' => 'color_box_foreground' ) ) );
 
 
 	$wp_customize->add_setting( 'color_link', array(
@@ -340,6 +353,25 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'settings' => 'color_header_stripe' ) ) );
 
 
+	//####################################
+	// Error page settings
+	//####################################
+
+	$wp_customize->add_section( 'theme_error_pages', array(
+		'title' => __( 'Error Pages', 'simplecommerce' )
+	) );
+
+	$wp_customize->add_setting( 'error_page_404_custom_html', array(
+		'default' => '',
+		'transport' => 'refresh'
+	) );
+	$wp_customize->add_control( 'error_page_404_custom_html_control', array(
+		'label' => __( 'Custom 404 HTML', 'simplecommerce' ),
+		'section' => 'theme_error_pages',
+		'settings' => 'error_page_404_custom_html',
+		'type' => 'textarea'
+	) );
+
 }
 
 
@@ -355,6 +387,7 @@ function ensure_starts_with( $subject, $start_with ) {
 }
 function simplecommerce_customize_css() {
 	$color_background_light = ensure_starts_with( get_theme_mod( 'color_background_light', '#f8f8f8' ), '#' );
+	$color_box_foreground = ensure_starts_with( get_theme_mod( 'color_box_foreground', '#222' ), '#' );
 	$color_label_text = ensure_starts_with( get_theme_mod( 'color_label_text', '#555' ), '#' );
 	$color_border = ensure_starts_with( get_theme_mod( 'color_border', '#e1e1e1' ), '#' );
 	$color_accent_background = ensure_starts_with( get_theme_mod( 'color_accent_background', '#aaa' ), '#' );
@@ -368,14 +401,16 @@ function simplecommerce_customize_css() {
 	$color_button_text_hover = ensure_starts_with( get_theme_mod( 'color_button_text_hover', '#fff' ), '#' );
 	$color_background_dark = ensure_starts_with( get_theme_mod( 'color_background_dark', '#222' ), '#' );
 	$color_footer_text = ensure_starts_with( get_theme_mod( 'color_footer_text', '#eee' ), '#' );
-
 	?>
 		<style type='text/css'>
-		<?php if ( is_valid_color( $color_background_light ) ): ?>
+
+		<?php if ( is_valid_color( $color_background_light ) || is_valid_color( $color_box_foreground ) ): ?>
 			code, aside, blockquote, label.toggle, .toggle-content, article.comment.row, .author-box {
-				background: <?php echo $color_background_light; ?>;
+				<?php echo is_valid_color( $color_background_light ) ? "background: $color_background_light;" : "" ?>
+				<?php echo is_valid_color( $color_box_foreground ) ? "color: $color_box_foreground;" : ""; ?>
 			}
 		<?php endif;
+
 		if ( is_valid_color( $color_label_text ) ): ?>
 			label.toggle {
 				color: <?php echo $color_label_text; ?>;
