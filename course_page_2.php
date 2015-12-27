@@ -24,7 +24,7 @@
 		</div>
 		<div class="three columns">
 			<?php 
-			$sidebar_name = 'right';
+			$sidebar_name = 'wtp-course-sidebar';
 			if ( is_active_sidebar( $sidebar_name ) ): ?>
 			<ul class="widget-area">
 				<?php dynamic_sidebar( $sidebar_name ); ?>

@@ -71,6 +71,12 @@ add_action( 'widgets_init', function() {
 		'id'		=> 'right',
 		'description' => __( 'Widgets added to this sidebar will be displayed on the right-hand side of the course template page.' )
 	) );
+
+	register_sidebar( array(
+		'name' => 'WTP Course sidebar',
+		'id' => 'wtp-course-sidebar',
+		'dsecription' => __( 'WTP Course Sidebar' )
+	));		
 });
 
 // ==========================================================
