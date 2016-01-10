@@ -34,7 +34,7 @@
 
 		the_content( __( 'Continue reading...', 'simplecommerce' ) );
 
-		if ( get_post_type() != 'page' ) {
+		if ( get_post_type() != 'page' && get_post_type() != 'forum' ) {
 			simplecommerce_author_box();
 		}
 
