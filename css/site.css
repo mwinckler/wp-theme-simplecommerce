@@ -1363,3 +1363,9 @@ textarea#comment {
 .columns img {
   max-width: 100%;
 }
+
+.nav-previous, .nav-next {
+  float: none;
+  text-align: center;
+  max-width: 100%;
+}

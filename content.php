@@ -40,7 +40,7 @@
 			simplecommerce_author_box();
 		}
 
-		if ( !is_single() && !$is_page  )  {
+		if ( !is_single() && !$is_page && !$is_forum  )  {
 		?>
 		<div class="comments-link">
 			<span>
