@@ -196,7 +196,7 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 
 function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
 	$parsed_attrs = shortcode_atts( array(
-		'align' => 'right'
+		'align' => ''
 	), $attrs );
 	return "<aside class='content-box " . $parsed_attrs['align'] . "'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . "</aside>";
 }

@@ -928,16 +928,29 @@ blockquote {
 }
 
 aside {
-  float: right;
   margin: 20px;
+  clear: both;
+}
+
+aside.right {
+  float: right;
   width: 30%;
+  clear: none;
+}
+
+aside.left {
+  float: left;
+  width: 30%;
+  clear: none;
 }
 
 @media (max-width: 750px) {
   aside {
+    margin: 20px 0;
+  }
+  aside.left, aside.right {
     float: none;
-    width: 100%;
-    margin-left: 0;
+    width: auto;
   }
 }
 
@@ -1251,9 +1264,6 @@ article.post {
     margin: 0 auto;
   }
 
-}
-.content-box.left {
-  float: left;
 }
 .header-stripe {
   width: 100%;

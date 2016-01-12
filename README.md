@@ -46,7 +46,14 @@ Use `[toggle]` to allow users to show or hide the content contained in the short
 
 ### Content box
 
-The `[contentbox]` shortcode generates an `aside`. It can be aligned 
+The `[contentbox]` shortcode generates an `aside`. By default it is full width and clears both sides. You can add the `align` attribute with values of `left` or `right` to have the box float to the left or right. Examples:
+
+	[contentbox]My full-width content here[/contentbox]
+
+	[contentbox align="left"]A smaller box floating to the left[/contentbox]
+
+	[contentbox align="right"]A smaller box floating to the right[/contentbox]
+
 
 ## Images
 
