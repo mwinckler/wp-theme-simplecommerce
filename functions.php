@@ -98,7 +98,7 @@ add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
 
 function simplecommerce_parse_markdown( $content ) {
 	if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'markdown' ) ) {
-		return WPCom_Markdown::get_instance()->transform( $content );
+		return WPCom_Markdown::get_instance()->transform( $content, array( 'unslash' => false ) );
 	}
 
 	return $content;	
