@@ -36,8 +36,7 @@ add_filter( 'the_content', 'do_shortcode', 9 );
 // Enqueue main styles
 add_action( 'wp_enqueue_scripts', function() {
 	global $wp_styles;
-	wp_enqueue_style( 'style-primary', get_bloginfo( 'stylesheet_directory' ) . '/css/site.css' );
-	wp_enqueue_style( 'fontawesome', get_bloginfo( 'stylesheet_directory' ) . '/css/font-awesome.min.css' );
+	wp_enqueue_style( 'style-primary', get_template_directory_uri() . '/css/site.css' );
 });
 
 // ==========================================================
