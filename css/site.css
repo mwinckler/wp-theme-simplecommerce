@@ -1127,7 +1127,11 @@ article img {
   box-shadow: 0 2px 4px 0 #666;
 }
 
-.nested.columns img {
+.columns img {
+  max-width: 100%;
+}
+
+.nested.column img {
   margin-left: 0;
   margin-right: 0;
 }
