@@ -1126,6 +1126,13 @@ article img {
   margin: 15px;
   box-shadow: 0 2px 4px 0 #666;
 }
+
+.nested.columns img {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
 img.noshadow {
   box-shadow: none;
 }
@@ -1368,10 +1375,6 @@ div.comments-link:after {
 textarea#comment {
   width: 100%;
   height: 20rem;
-}
-
-.columns img {
-  max-width: 100%;
 }
 
 .nav-previous, .nav-next {
