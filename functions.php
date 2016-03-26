@@ -3,6 +3,7 @@
 add_theme_support( 'custom-header' );
 add_theme_support( 'title-tag' );
 add_theme_support( 'automatic-feed-links' );
+add_theme_support( 'post-thumbnails' );
 
 // This is bad, but necessary. wpautop(), apart from being a poor idea in the first place (IMO),
 // doesn't know anything about shortcodes and consistently breaks shortcodes with content. The
@@ -12,7 +13,7 @@ add_theme_support( 'automatic-feed-links' );
 //
 // That leaves the hapless theme/plugin developer three options:
 //
-// 1. Rejigger the shortcode filter priority to bump it ahead of wpautop(). This could break 
+// 1. Rejigger the shortcode filter priority to bump it ahead of wpautop(). This could break
 //    other plugins relying on priority.
 // 2. Disable wpautop() entirely. (I would rejoice in principle, but most other people like wpautop.)
 // 3. Leave shortcodes broken and generating invalid output, and just recommend to users that they
@@ -75,7 +76,7 @@ add_action( 'widgets_init', function() {
 		'name' => 'WTP Course sidebar',
 		'id' => 'wtp-course-sidebar',
 		'dsecription' => __( 'WTP Course Sidebar' )
-	));		
+	));
 });
 
 // ==========================================================
@@ -100,7 +101,7 @@ function simplecommerce_parse_markdown( $content ) {
 		return WPCom_Markdown::get_instance()->transform( $content, array( 'unslash' => false ) );
 	}
 
-	return $content;	
+	return $content;
 }
 
 function simplecommerce_shortcode_columns( $attrs, $content = '' ) {
@@ -171,7 +172,7 @@ function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
 function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 	// The ID of each toggle-able must be unique per request for the CSS styling to work.
 	// This is not threadsafe. :P
-	static $simplecommerce_toggle_id = 0; 
+	static $simplecommerce_toggle_id = 0;
 	$parsed_attrs = shortcode_atts( array(
 		'title' => '',
 		'initial_state' => 'closed'
@@ -216,7 +217,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#f8f8f8',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_light', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_light', array(
 		'label' => __( 'Aside/Box Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_background_light' ) ) );
@@ -225,7 +226,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#222',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_box_foreground', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_box_foreground', array(
 		'label' => __( 'Aside/Box Text Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_box_foreground' ) ) );
@@ -235,7 +236,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#1eaedb',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link', array(
 		'label' => __( 'Link Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_link' ) ) );
@@ -244,7 +245,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#845ba4',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_visited', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_visited', array(
 		'label' => __( 'Link Visited Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_link_visited' ) ) );
@@ -253,7 +254,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#0fa0ce',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_hover', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_link_hover', array(
 		'label' => __( 'Link Hover Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_link_hover' ) ) );
@@ -263,7 +264,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#e1e1e1',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_border', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_border', array(
 		'label' => __( 'Border Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_border' ) ) );
@@ -273,7 +274,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#0073d4',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background', array(
 		'label' => __( 'Button Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_button_background' ) ) );
@@ -282,7 +283,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#4fa5ed',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background_hover', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_background_hover', array(
 		'label' => __( 'Button Background Hover Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_button_background_hover' ) ) );
@@ -292,7 +293,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#fff',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text', array(
 		'label' => __( 'Button Text Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_button_text' ) ) );
@@ -302,7 +303,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#fff',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text_hover', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_button_text_hover', array(
 		'label' => __( 'Button Text Hover Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_button_text_hover' ) ) );
@@ -312,7 +313,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#222',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_dark', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_background_dark', array(
 		'label' => __( 'Dark Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_background_dark' ) ) );
@@ -321,7 +322,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#eee',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_footer_text', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_footer_text', array(
 		'label' => __( 'Footer Text Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_footer_text' ) ) );
@@ -333,7 +334,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#555',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_label_text', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_label_text', array(
 		'label' => __( 'Label Text Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_label_text' ) ) );
@@ -343,7 +344,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '#aaa',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_accent_background', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_accent_background', array(
 		'label' => __( 'Accent Background Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_accent_background' ) ) );
@@ -352,7 +353,7 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'default' => '',
 		'transport' => 'refresh'
 	) );
-	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_header_stripe', array( 
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'color_header_stripe', array(
 		'label' => __( 'Header Stripe Color', 'simplecommerce' ),
 		'section' => 'colors',
 		'settings' => 'color_header_stripe' ) ) );
@@ -424,7 +425,7 @@ function simplecommerce_customize_css() {
 		if ( is_valid_color( $color_border ) ): ?>
 			code, th, td, hr {
 				border-color: <?php echo $color_border; ?>;
-			} 
+			}
 			ul#menu-primary-nav:before, ul#menu-primary-nav:after {
 				background: <?php echo $color_border; ?>;
 			}
@@ -517,6 +518,28 @@ function simplecommerce_author_box() {
 		<?php echo get_the_author_meta( 'description' ); ?>
 	</div>
 <?php
+}
+
+
+// ==========================================================
+// Previous-Version Compatibility
+// ==========================================================
+
+if ( !function_exists('get_the_post_thumbnail_url') ) {
+	if ( !function_exists('wp_get_attachment_image_url') ) {
+		function wp_get_attachment_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
+		    $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
+		    return isset( $image['0'] ) ? $image['0'] : false;
+		}
+	}
+
+	function get_the_post_thumbnail_url( $post = null, $size = 'post-thumbnail' ) {
+	    $post_thumbnail_id = get_post_thumbnail_id( $post );
+	    if ( ! $post_thumbnail_id ) {
+	        return false;
+	    }
+	    return wp_get_attachment_image_url( $post_thumbnail_id, $size );
+	}
 }
 
 ?>
