@@ -75,7 +75,13 @@ add_action( 'widgets_init', function() {
 	register_sidebar( array(
 		'name' => 'WTP Course sidebar',
 		'id' => 'wtp-course-sidebar',
-		'dsecription' => __( 'WTP Course Sidebar' )
+		'description' => __( 'WTP Course Sidebar' )
+	));
+
+	register_sidebar( array(
+		'name' => 'AOH Course sidebar',
+		'id' => 'aoh-course-sidebar',
+		'description' => __( 'AOH Course Sidebar' )
 	));
 });
 

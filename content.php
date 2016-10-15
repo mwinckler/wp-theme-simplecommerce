@@ -3,7 +3,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php 
+	<?php
 		$post_type = get_post_type();
 		$is_page = $post_type == 'page';
 		$is_forum = $post_type == 'forum' || $post_type = 'topic';
@@ -16,9 +16,9 @@
 
 		if ( !$is_page && !$is_forum ): ?>
 			<div class="author-byline">
-				<time><?php the_time( 'F jS, Y' ); ?></time> 
-				&SmallCircle; 
-				<span><?php the_author(); ?></span> 
+				<time><?php the_time( 'F jS, Y' ); ?></time>
+				&SmallCircle;
+				<span><?php the_author(); ?></span>
 				<?php
 					$categories = get_the_category();
 					$output = array();
@@ -29,7 +29,7 @@
 					    echo '&SmallCircle; <span>' . implode( $output, ', ' ) . '</span>';
 					}
 				?>
-				
+
 				<?php edit_post_link( __( 'Edit', 'simplecommerce' ), '&SmallCircle; <span>', '</span>' ); ?>
 			</div>
 		<?php endif;
@@ -57,6 +57,6 @@
 			'after'			=> '</nav>'
 		) );
 
-		
+
 	?>
 </article>

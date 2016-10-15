@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Course Page
+ * Template Name: Course 3 Page
  */
 	get_header();
 ?>
@@ -19,7 +19,7 @@
 		</div>
 		<div class="three columns">
 			<?php
-			$sidebar_name = 'wtp-course-sidebar';
+			$sidebar_name = 'aoh-course-sidebar';
 			if ( is_active_sidebar( $sidebar_name ) ): ?>
 			<ul class="widget-area">
 				<?php dynamic_sidebar( $sidebar_name ); ?>
