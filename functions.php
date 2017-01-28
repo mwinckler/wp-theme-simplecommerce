@@ -32,12 +32,15 @@ add_theme_support( 'post-thumbnails' );
 remove_filter( 'the_content', 'do_shortcode' );
 add_filter( 'the_content', 'do_shortcode', 9 );
 
-
-
 // Enqueue main styles
 add_action( 'wp_enqueue_scripts', function() {
 	global $wp_styles;
-	wp_enqueue_style( 'style-primary', get_template_directory_uri() . '/css/site.css' );
+	wp_enqueue_style(
+		'style-primary', // Warning: Identifier is referenced in child themes
+		get_template_directory_uri() . '/css/site.css',
+		array(),
+		'20170128'
+	);
 });
 
 // ==========================================================
@@ -51,7 +54,6 @@ add_action( 'after_setup_theme', function() {
 // ==========================================================
 // Sidebars
 // ==========================================================
-
 
 add_action( 'widgets_init', function() {
 	register_sidebar( array(
@@ -174,7 +176,6 @@ function simplecommerce_shortcode_testimonial( $attrs, $content = '' ) {
 	return "<blockquote class='testimonial'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . $cite . "</blockquote>";
 }
 
-
 function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
 	// The ID of each toggle-able must be unique per request for the CSS styling to work.
 	// This is not threadsafe. :P
@@ -206,7 +207,6 @@ function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
 	), $attrs );
 	return "<aside class='content-box " . $parsed_attrs['align'] . "'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . "</aside>";
 }
-
 
 // ==========================================================
 // Theme Settings (Customizer)
@@ -333,9 +333,6 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'section' => 'colors',
 		'settings' => 'color_footer_text' ) ) );
 
-
-
-
 	$wp_customize->add_setting( 'color_label_text', array(
 		'default' => '#555',
 		'transport' => 'refresh'
@@ -364,7 +361,6 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'section' => 'colors',
 		'settings' => 'color_header_stripe' ) ) );
 
-
 	//####################################
 	// Error page settings
 	//####################################
@@ -383,20 +379,20 @@ function simplecommerce_customize_register( $wp_customize ) {
 		'settings' => 'error_page_404_custom_html',
 		'type' => 'textarea'
 	) );
-
 }
-
 
 add_action( 'wp_head', 'simplecommerce_customize_css');
 
 function is_valid_color( $color ) {
 	return preg_match( '/#([a-f0-9]{3}|[a-f0-9]{6})/', $color );
 }
+
 function ensure_starts_with( $subject, $start_with ) {
 	return ( strpos( $subject, $start_with, 0 ) !== FALSE )
 			? $subject
 			: $start_with . $subject;
 }
+
 function simplecommerce_customize_css() {
 	$color_background_light = ensure_starts_with( get_theme_mod( 'color_background_light', '#f8f8f8' ), '#' );
 	$color_box_foreground = ensure_starts_with( get_theme_mod( 'color_box_foreground', '#222' ), '#' );
@@ -508,9 +504,6 @@ function simplecommerce_customize_css() {
 			}
 		<?php endif; ?>
 
-
-
-
 		</style>
 	<?php
 }
@@ -525,7 +518,6 @@ function simplecommerce_author_box() {
 	</div>
 <?php
 }
-
 
 // ==========================================================
 // Previous-Version Compatibility
