@@ -1298,6 +1298,9 @@ nav.pagination .page-numbers {
   border-radius: 5px;
   padding: 0.3em;
 }
+nav.pagination .page-numbers.current {
+  background: #430087;
+}
 nav.pagination .dots {
   color: #222;
   background: none;
