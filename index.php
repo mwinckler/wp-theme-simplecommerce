@@ -21,7 +21,7 @@
 				}
 			} else {
 				get_template_part( 'content', 'none' );
-			} 
+			}
 			?>
 		</div>
 	</div>
@@ -56,8 +56,24 @@
 			</div>
 		<?php endforeach; ?>
 		</div>
-	<?php endif; ?>
 
-<?php
+		<?php
+
+		$archives_page_id = get_theme_mod( 'site_archives_page_id', '');
+		$archives_page_link = null;
+		if ( strlen($archives_page_id) > 0 ) {
+			$archives_page_link = get_permalink( $archives_page_id );
+		}
+
+		if ( $archives_page_link ) { ?>
+			<div class="row">
+				<div class="twelve columns">
+					<p class="call-to-action">Want to read more? Check out the <a href="<?php echo $archives_page_link; ?>">archives!</a></p>
+				</div>
+			</div>
+		<?php
+		}
+	endif;
+
 	get_footer();
 ?>

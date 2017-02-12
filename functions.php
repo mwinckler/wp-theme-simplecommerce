@@ -39,7 +39,7 @@ add_action( 'wp_enqueue_scripts', function() {
 		'style-primary', // Warning: Identifier is referenced in child themes
 		get_template_directory_uri() . '/css/site.css',
 		array(),
-		'20170128'
+		'20170211'
 	);
 });
 
@@ -215,6 +215,17 @@ function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
 add_action( 'customize_register', 'simplecommerce_customize_register' );
 
 function simplecommerce_customize_register( $wp_customize ) {
+	//####################################
+	// Site archive page ID
+	//####################################
+	$wp_customize->add_setting( 'site_archives_page_id', array( 'default' => '' ));
+	$wp_customize->add_control( 'site_archives_page_id_control', array(
+		'label' => __( 'Site Archives Page ID', 'simplecommerce' ),
+		'section' => 'title_tagline',
+		'settings' => 'site_archives_page_id',
+		'type' => 'text'
+	) );
+
 	//####################################
 	// Color settings
 	//####################################
