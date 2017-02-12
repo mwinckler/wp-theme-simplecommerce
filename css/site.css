@@ -1372,10 +1372,12 @@ div.comments-link {
   text-align: center;
   margin: 15px auto;
 }
+
 div.comments-link > span {
   background: #fff;
   padding: 0.5em 1.5em;
 }
+
 div.comments-link:after {
   content: "";
   display: block;
@@ -1388,7 +1390,6 @@ div.comments-link:after {
   z-index: -1;
 }
 
-
 textarea#comment {
   width: 100%;
   height: 20rem;
@@ -1398,4 +1399,51 @@ textarea#comment {
   float: none;
   text-align: center;
   max-width: 100%;
+}
+
+section.year {
+  background: #f6f6f6;
+  padding: 0 0 10px;
+}
+
+section.month {
+  background: #fff;
+  margin: 0 6px;
+}
+
+.site-archive h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.site-archive h4 {
+  margin: 8px;
+}
+
+.site-archive ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.site-archive ul ul {
+  margin-left: 20px;
+}
+
+.site-archive ul li {
+  border-bottom: 1px solid #eee;
+  margin: 0 10px;
+}
+
+.site-archive ul li a {
+  display: block;
+  margin: 0 -10px;
+  padding: 5px 10px;
+}
+
+.site-archive ul li a:hover {
+  background: #ffe;
+}
+
+#archive-toc li {
+  font-size: 1.7rem;
 }
