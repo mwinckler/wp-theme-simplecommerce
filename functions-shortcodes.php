@@ -7,6 +7,16 @@ foreach ( $shortcodes as $shortcode ) {
     add_shortcode( $shortcode, 'simplecommerce_shortcode_' . $shortcode );
 }
 
+add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
+    global $shortcodes;
+
+    foreach ( $shortcodes as $shortcode ) {
+        $non_texturized_shortcodes[] = $shortcode;
+    }
+
+    return $non_texturized_shortcodes;
+});
+
 // This is the story of a terrible design decision in WordPress. At some point in the distant
 // past (at least ten years ago as of this writing), the `wpautop` function was introduced to
 // automatically add <p> and <br> to post content instead of implementing a Markdown parser.
@@ -28,7 +38,7 @@ foreach ( $shortcodes as $shortcode ) {
 //    commits its debauchery, then parse the content again and replace the random strings with
 //    your shortcodes again (all before `do_shortcode` runs).
 //
-// I've opted for #4 here, which is why this file is about three times as complicatd as it needs to be.
+// I've opted for #4 here, which is why this file is about three times as complicated as it needs to be.
 // I previously used #1, but that does subtly break some popular plugins such as WooCommerce. Even this
 // approach is not perfect because it's still not a true token parser, but it's "good enough"...for now.
 //
@@ -48,6 +58,16 @@ add_filter('the_content', 'simplecommerce_restore_shortcodes_after_wpautop', 10)
 function simplecommerce_rescue_shortcodes_from_wpautop( $content ) {
     global $shortcode_replacements;
 
+    // Returns empty array if no match found, else:
+    //  $result[0] == shortcode_tag_found
+    //  $result[1] == string index
+    function find_next_shortcode_open_tag ( $shortcode, $content, $offset ) {
+        $matches = array();
+        $result = preg_match( '/\[' . $shortcode . '( [^]]+)?\]/', $content, $matches, PREG_OFFSET_CAPTURE, $offset );
+
+        return $result === 1 ? array( $matches[0][0], $matches[0][1] ) : array();
+    }
+
     function find_first_shortcode_pos( $content, $offset ) {
         global $shortcodes;
 
@@ -55,72 +75,75 @@ function simplecommerce_rescue_shortcodes_from_wpautop( $content ) {
         $first_shortcode = null;
 
         foreach ( $shortcodes as $shortcode ) {
-            $pos = strpos( $content, '[' . $shortcode . ']', $offset );
+            $result = find_next_shortcode_open_tag( $shortcode, $content, $offset );
 
-            if ( $pos !== false && ( $earliest_pos == -1 || $pos < $earliest_pos ) ) {
-                $earliest_pos = $pos;
+            if ( count( $result ) === 0 ) {
+                continue;
+            }
+
+            if ( $earliest_pos == -1 || $result[1] < $earliest_pos ) {
+                $earliest_pos = $result[1];
                 $first_shortcode = $shortcode;
             }
         }
 
-        return $earliest_pos;
+        return array( $earliest_pos, $first_shortcode );
     }
 
-    // Search for any instance of known shortcodes.
-    // Upon finding a shortcode opening tag, continue searching forward for the corresponding closing tag.
-    $pos = 0;
+    $opening_index = 0;
 
-    while ( $pos < strlen( $content ) ) {
-        $pos = find_first_shortcode_pos( $content, $pos );
+    while ( $opening_index < strlen( $content ) ) {
+        $result = find_first_shortcode_pos( $content, $opening_index );
+        $opening_index = $result[0];
+        $tag_name = $result[1];
 
-        if ( $pos == -1 ) {
+        if ( $opening_index == -1 ) {
             break;
         }
 
         // Found an opening tag? Continue searching until we find the matching closing tag.
         // There is the possibility of nested opening tags before reaching the matching close.
-        $tag_name = substr( $content, $pos + 1, strpos( $content, ']', $pos ) - $pos - 1 );
-        $opening_tag_regex = '/\[' . $tag_name . '( [^]]+)?\]/';
         $closing_tag = '[/' . $tag_name . ']';
         $open_tag_count = 1;
-        $current_index = $pos;
+        $closing_index = $opening_index;
 
-        while ( $open_tag_count > 0 && $current_index > -1 && $current_index < strlen( $content )) {
-            $closing_pos = strpos( $content, $closing_tag, $current_index );
-            $open_tag_found = preg_match( $opening_tag_regex, $content, $matches, PREG_OFFSET_CAPTURE, $current_index );
-
-            if ( $open_tag_found ) {
-                $matched_open_tag = $matches[0][0];
-                $next_opening_pos = $matches[0][1];
-            }
+        while ( $open_tag_count > 0 && $closing_index < strlen( $content )) {
+            $closing_pos = strpos( $content, $closing_tag, $closing_index );
 
             if ( $closing_pos === false ) {
-                $closing_pos = -1;
+                // This is a problem; we have no closing tag. Just take the rest of the content.
+                $open_tag_count = 0;
+                $closing_index = strlen( $content );
+                break;
+            }
+
+            $open_tag_matches = find_next_shortcode_open_tag ( $tag_name, $content, $closing_index );
+            $open_tag_found = count( $open_tag_matches ) > 0;
+
+            if ( $open_tag_found ) {
+                $matched_open_tag = $open_tag_matches[0];
+                $next_opening_pos = $open_tag_matches[1];
             }
 
             if ( !$open_tag_found || $closing_pos < $next_opening_pos ) {
-                if ( $closing_pos == -1 ) {
-                    // This is a problem; we have no closing tag. Just take the rest of the content.
-                    $open_tag_count = 0;
-                    $closing_pos = strlen( $content ) - strlen( $closing_tag );
-                    break;
-                }
-
-                $current_index = $closing_pos + strlen( $closing_tag );
+                $closing_index = $closing_pos + strlen( $closing_tag );
                 $open_tag_count--;
             } else {
-                $current_index = $next_opening_pos + strlen( $matched_open_tag );
+                $closing_index = $next_opening_pos + strlen( $matched_open_tag );
                 $open_tag_count++;
             }
         }
 
-        // Replace everything from $pos to $current_index with a placeholder and stash that placeholder.
+        // Replace everything from $opening_index to $closing_index with a placeholder and stash that placeholder.
         // Don't forget to wrap it in <p> so that wpautop doesn't. :P
-        $key = '<p>' . md5(rand()) . '</p>';
-        $shortcode_replacements[$key] = substr( $content, $pos, $current_index - $pos );
-        $content = substr_replace( $content, $key, $pos, $current_index - $pos );
+        do {
+            $key = '<p>' . md5(rand()) . '</p>';
+        } while ( array_key_exists( $key, $shortcode_replacements ) );
 
-        $pos = $pos + strlen( $key );
+        $shortcode_replacements[$key] = substr( $content, $opening_index, $closing_index - $opening_index );
+        $content = substr_replace( $content, $key, $opening_index, $closing_index - $opening_index );
+
+        $opening_index = $opening_index + strlen( $key );
     }
 
     return $content;
@@ -135,16 +158,6 @@ function simplecommerce_restore_shortcodes_after_wpautop( $content ) {
 
     return $content;
 }
-
-add_filter( 'no_texturize_shortcodes', function( $non_texturized_shortcodes ) {
-    global $shortcodes;
-
-    foreach ( $shortcodes as $shortcode ) {
-        $non_texturized_shortcodes[] = $shortcode;
-    }
-
-    return $non_texturized_shortcodes;
-});
 
 function simplecommerce_parse_markdown( $content ) {
     if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'markdown' ) ) {
@@ -176,6 +189,7 @@ function simplecommerce_shortcode_column( $attrs, $content = '' ) {
         'total_count' => 1
     ), $attrs );
     $css_class = '';
+
     switch( $parsed_attrs['total_count'] ) {
         case '2':
             $css_class = 'one-half';
@@ -184,6 +198,7 @@ function simplecommerce_shortcode_column( $attrs, $content = '' ) {
             $css_class = 'one-third';
             break;
     }
+
     return "<div class='nested column $css_class'>" . do_shortcode( simplecommerce_parse_markdown( $content ) ) . "</div>";
 }
 
@@ -240,7 +255,6 @@ function simplecommerce_shortcode_toggle( $attrs, $content = '' ) {
                  $parsed_attrs['title'] . "</label>" .
             "<div id='sc-toggle-$id' class='toggle-content' markdown='1'>" . simplecommerce_parse_markdown( $content ) . "</div>" .
             "</div>"; // .toggle-container
-
 }
 
 function simplecommerce_shortcode_contentbox( $attrs, $content = '' ) {
