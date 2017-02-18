@@ -55,40 +55,40 @@ add_filter('the_content', 'simplecommerce_rescue_shortcodes_from_wpautop', 9);
 // Same level as wp_autop, executed after (because ours is added later) but before do_shortcode at 11
 add_filter('the_content', 'simplecommerce_restore_shortcodes_after_wpautop', 10);
 
-function simplecommerce_rescue_shortcodes_from_wpautop( $content ) {
-    global $shortcode_replacements;
+// Returns empty array if no match found, else:
+//  $result[0] == shortcode_tag_found
+//  $result[1] == string index
+function find_next_shortcode_open_tag( $shortcode, $content, $offset ) {
+    $matches = array();
+    $result = preg_match( '/\[' . $shortcode . '( [^]]+)?\]/', $content, $matches, PREG_OFFSET_CAPTURE, $offset );
 
-    // Returns empty array if no match found, else:
-    //  $result[0] == shortcode_tag_found
-    //  $result[1] == string index
-    function find_next_shortcode_open_tag ( $shortcode, $content, $offset ) {
-        $matches = array();
-        $result = preg_match( '/\[' . $shortcode . '( [^]]+)?\]/', $content, $matches, PREG_OFFSET_CAPTURE, $offset );
+    return $result === 1 ? array( $matches[0][0], $matches[0][1] ) : array();
+}
 
-        return $result === 1 ? array( $matches[0][0], $matches[0][1] ) : array();
-    }
+function find_first_shortcode_pos( $content, $offset ) {
+    global $shortcodes;
 
-    function find_first_shortcode_pos( $content, $offset ) {
-        global $shortcodes;
+    $earliest_pos = -1;
+    $first_shortcode = null;
 
-        $earliest_pos = -1;
-        $first_shortcode = null;
+    foreach ( $shortcodes as $shortcode ) {
+        $result = find_next_shortcode_open_tag( $shortcode, $content, $offset );
 
-        foreach ( $shortcodes as $shortcode ) {
-            $result = find_next_shortcode_open_tag( $shortcode, $content, $offset );
-
-            if ( count( $result ) === 0 ) {
-                continue;
-            }
-
-            if ( $earliest_pos == -1 || $result[1] < $earliest_pos ) {
-                $earliest_pos = $result[1];
-                $first_shortcode = $shortcode;
-            }
+        if ( count( $result ) === 0 ) {
+            continue;
         }
 
-        return array( $earliest_pos, $first_shortcode );
+        if ( $earliest_pos == -1 || $result[1] < $earliest_pos ) {
+            $earliest_pos = $result[1];
+            $first_shortcode = $shortcode;
+        }
     }
+
+    return array( $earliest_pos, $first_shortcode );
+}
+
+function simplecommerce_rescue_shortcodes_from_wpautop( $content ) {
+    global $shortcode_replacements;
 
     $opening_index = 0;
 
