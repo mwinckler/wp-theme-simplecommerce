@@ -12,7 +12,7 @@ add_action( 'wp_enqueue_scripts', function() {
 		'style-primary', // Warning: Identifier is referenced in child themes
 		get_template_directory_uri() . '/css/site.css',
 		array(),
-		'20170218'
+		'20170221'
 	);
 });
 

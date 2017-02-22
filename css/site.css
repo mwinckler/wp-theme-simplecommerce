@@ -629,7 +629,6 @@ input[type="button"] {
   font-weight: 600;
   letter-spacing: .1rem;
   text-decoration: none;
-  white-space: nowrap;
   background-color: transparent;
   border-radius: 4px;
   border: 1px solid #bbb;
